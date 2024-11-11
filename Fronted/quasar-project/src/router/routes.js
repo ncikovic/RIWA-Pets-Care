@@ -9,6 +9,7 @@ const routes = [
       {path: '/popisVeterinara', component: () => { return import('pages/PopisVeterinaraPage.vue')}},
       {path: '/prijavaKorisnika', component: () => { return import('pages/PrijavaKorisnikaPage.vue')}},
       {path: '/registracijaKorisnika', component: () => { return import('pages/RegistracijaKorisnikaPage.vue')}},
+      {path: '/postavke', component: () => { return import('pages/PostavkePage.vue')}}
     ]
   },
 

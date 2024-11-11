@@ -19,17 +19,9 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
+        <q-item-label header> Essential Links </q-item-label>
 
         <EssentialLink
           v-for="link in linksList"
@@ -45,56 +37,69 @@
   </q-layout>
 </template>
 
+<style>
+/* Postavljanje prilagodljive veličine teksta za cijelu aplikaciju */
+html {
+  font-size: var(--text-size, 16px);
+}
+</style>
+
 <script setup>
-import { ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+import { ref } from "vue";
+import EssentialLink from "components/EssentialLink.vue";
 
 defineOptions({
-  name: 'MainLayout'
-})
+  name: "MainLayout",
+});
 
 const linksList = [
   {
-    title: 'Početna stranica',
-    caption: 'Početna',
-    icon: 'home',
-    link: '#/'
+    title: "Početna stranica",
+    caption: "Početna",
+    icon: "home",
+    link: "#/",
   },
   {
-    title: 'O nama',
-    caption: 'Saznaj o Pets&Care zajednici!',
-    icon: 'favourite',
-    link: '#/o_nama'
+    title: "O nama",
+    caption: "Saznaj o Pets&Care zajednici!",
+    icon: "favourite",
+    link: "#/o_nama",
   },
   {
-    title: 'Događaji',
-    caption: 'Pretraži nadolazeće događaje.',
-    icon: 'event',
-    link: '#/dogadaji'
+    title: "Događaji",
+    caption: "Pretraži nadolazeće događaje.",
+    icon: "event",
+    link: "#/dogadaji",
   },
   {
-    title: 'Popis veterinara',
-    caption: 'Tražiš li veterinara?',
-    icon: 'search',
-    link: '#/popisVeterinara'
+    title: "Popis veterinara",
+    caption: "Tražiš li veterinara?",
+    icon: "search",
+    link: "#/popisVeterinara",
   },
   {
-    title: 'Prijava korisnika',
-    caption: 'Prijavi se u svoj račun!',
-    icon: 'login',
-    link: '#/prijavaKorisnika'
+    title: "Prijava korisnika",
+    caption: "Prijavi se u svoj račun!",
+    icon: "login",
+    link: "#/prijavaKorisnika",
   },
   {
-    title: 'Registracija korisnika',
-    caption: 'Nemaš račun?  Registriraj se!',
-    icon: 'app_registration',
-    link: '#/registracijaKorisnika'
-  }
-]
+    title: "Registracija korisnika",
+    caption: "Nemaš račun?  Registriraj se!",
+    icon: "app_registration",
+    link: "#/registracijaKorisnika",
+  },
+  {
+    title: "Postavke",
+    caption: "Postavke",
+    icon: "settings",
+    link: "#/postavke",
+  },
+];
 
-const leftDrawerOpen = ref(false)
+const leftDrawerOpen = ref(false);
 
-function toggleLeftDrawer () {
-  leftDrawerOpen.value = !leftDrawerOpen.value
+function toggleLeftDrawer() {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 </script>

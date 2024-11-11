@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-deprecated-filter -->
 <template>
   <q-page padding>
     <div>
@@ -22,9 +21,7 @@
       >
         <div class="q-mt-md">
           <p><strong>Naslov:</strong> {{ selectedEvent.title }}</p>
-          <p>
-            <strong>Vrijeme:</strong> {{ selectedEvent.start | formatDate }}
-          </p>
+          <p><strong>Vrijeme:</strong> {{ formatDate(selectedEvent.start) }}</p>
           <p><strong>Lokacija:</strong> {{ selectedEvent.location }}</p>
           <p><strong>Opis:</strong> {{ selectedEvent.description }}</p>
         </div>
@@ -34,19 +31,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed } from "vue"; // Importirajte samo ref i computed iz Vue-a
 import FullCalendar from "@fullcalendar/vue"; // FullCalendar komponenta
 import dayGridPlugin from "@fullcalendar/daygrid"; // Kalendar sa mjesečnim pregledom
 import interactionPlugin from "@fullcalendar/interaction"; // Za interakciju sa kalendarom
 import { date } from "quasar";
 import eventData from "~assets/events.json"; // Import podataka iz events.json
 
-// Podaci događaja preuzeti iz JSON-a
-const events = ref(eventData); // Podaci su sada dostupni u `events`
-const selectedEvent = ref(null);
-
-// Pluginovi za kalendar
-const calendarPlugins = [dayGridPlugin, interactionPlugin];
+// Postavke za kalendar
+const events = ref(eventData); // Podaci događaja preuzeti iz JSON-a
+const selectedEvent = ref(null); // Detalji za selektirani događaj
+const calendarPlugins = [dayGridPlugin, interactionPlugin]; // Pluginovi za kalendar
 
 // Formatiranje datuma za Vue
 const formatDate = (date) => {
@@ -70,6 +65,44 @@ const handleEventClick = (info) => {
     description: info.event.extendedProps.description,
   };
 };
+
+const selectedDate = ref(today());
+const calendar = ref(null);
+const startDate = ref(today());
+const endDate = ref(today());
+
+function onMoved(data) {
+  console.log("onMoved", data);
+}
+
+function onChange(data) {
+  startDate.value = data.start;
+  endDate.value = data.end;
+}
+
+function onClickDate(data) {
+  console.log("onClickDate", data);
+}
+
+function onClickDay(data) {
+  console.log("onClickDay", data);
+}
+
+function onClickHeadDay(data) {
+  console.log("onClickHeadDay", data);
+}
+
+function onToday() {
+  selectedDate.value = today();
+}
+
+function onPrev() {
+  calendar.value.prev();
+}
+
+function onNext() {
+  calendar.value.next();
+}
 </script>
 
 <style scoped>

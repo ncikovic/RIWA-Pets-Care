@@ -5,6 +5,9 @@
     </q-page-container>
   </q-layout>
 </template>
+<style>
+  @import '../src/css/custom.css';
+</style>
 
 <script setup>
 import { ref, provide, watch } from "vue";

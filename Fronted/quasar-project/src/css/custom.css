@@ -1,0 +1,15 @@
+.main-heading{
+    padding:2% 2%;
+}
+
+.nav-logo{
+    width:6%;
+    margin-right:5%;
+    filter: invert(100%) sepia(15%) saturate(652%) hue-rotate(181deg) brightness(115%) contrast(100%);
+    transition: all 150ms ease-in-out;
+}
+
+.nav-logo:hover{
+    transform:scale(1.1);
+    cursor:pointer;
+}

@@ -3,6 +3,9 @@
     <router-view />
   </div>
 </template>
+<style>
+  @import '../src/css/custom.css';
+</style>
 
 <script setup>
 import { watch } from "vue";

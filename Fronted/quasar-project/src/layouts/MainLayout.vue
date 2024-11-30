@@ -11,11 +11,10 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title class="text-h3">
+        <q-toolbar-title class="text-h4 main-heading">
           Pets&Care web aplication
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <img class="nav-logo" src="../assets/Pets&Care.svg" @click="returnHome" alt="">
       </q-toolbar>
     </q-header>
 
@@ -101,5 +100,19 @@ const leftDrawerOpen = ref(false);
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
+}
+
+
+
+</script>
+
+
+<script>
+export default {
+  methods: {
+    returnHome() {
+      this.$router.push('/')
+    }
+  }
 }
 </script>

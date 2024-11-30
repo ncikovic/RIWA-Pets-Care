@@ -40,7 +40,7 @@ export default {
           specijalizacija: "Opća praksa",
           kontakt_email: "marko.horvat@email.com",
           kontakt_telefon: "091 234 5678",
-          specijalizacija_za: "Psi, Mačke",
+          specijalizacija_za: "Klasične ljubimce",
         },
         {
           id: 2,
@@ -62,7 +62,7 @@ export default {
           specijalizacija: "Dermatologija",
           kontakt_email: "ivana.petrovic@email.com",
           kontakt_telefon: "091 112 2334",
-          specijalizacija_za: "Psi, Mačke, Ptice",
+          specijalizacija_za: "Male životinje",
         },
         {
           id: 4,
@@ -73,7 +73,7 @@ export default {
           specijalizacija: "Stomatologija",
           kontakt_email: "luka.simek@email.com",
           kontakt_telefon: "099 334 4556",
-          specijalizacija_za: "Psi, Mačke",
+          specijalizacija_za: "Psi, Mačke, Zečevi",
         },
         {
           id: 5,
@@ -95,7 +95,7 @@ export default {
           specijalizacija: "Kardiologija",
           kontakt_email: "ivan.tomic@email.com",
           kontakt_telefon: "098 123 4567",
-          specijalizacija_za: "Psi, Mačke",
+          specijalizacija_za: "Hrčci, Zamorci, Zečevi",
         },
         {
           id: 7,
@@ -106,7 +106,7 @@ export default {
           specijalizacija: "Zoološki veterinar",
           kontakt_email: "maja.zoric@email.com",
           kontakt_telefon: "091 555 6677",
-          specijalizacija_za: "Ptice, Kameleoni, Zmije",
+          specijalizacija_za: "Egzotične vrste",
         },
         {
           id: 8,
@@ -125,10 +125,10 @@ export default {
           prezime: "Lukić",
           lokacija: "Osijek",
           radno_vrijeme: "Pon - Pet: 08:00 - 16:00",
-          specijalizacija: "Kirurgija",
+          specijalizacija: "Medicina egzotičnih životija",
           kontakt_email: "jana.lukic@email.com",
           kontakt_telefon: "091 789 1234",
-          specijalizacija_za: "Psi, Mačke, Ptice",
+          specijalizacija_za: "Egzotične ljubimce",
         },
         {
           id: 10,

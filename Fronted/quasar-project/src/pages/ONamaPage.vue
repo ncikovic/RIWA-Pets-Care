@@ -6,10 +6,17 @@
         <h2 class="subtitle">O nama</h2>
       </header>
 
-      <section class="section">
-        <h3 class="section-title">Uvod</h3>
-        <!-- Koristimo v-html kako bi prikazali <br> oznaku za prijelom linije -->
-        <p v-html="aboutInfo.intro"></p>
+      <!-- Sekcija sa slikom i uvodom -->
+      <section class="section with-image">
+        <img
+          src="~assets\doberman-photo.jpg"
+          alt="Pets and Care"
+          class="section-image"
+        />
+        <div class="text-content">
+          <h3 class="section-title">Uvod</h3>
+          <p v-html="aboutInfo.intro"></p>
+        </div>
       </section>
 
       <section class="section">
@@ -59,7 +66,25 @@ export default {
   color: #666
 
 .section
-  margin-bottom: 1.5em
+  margin-bottom: 2em
+  display: flex
+  align-items: flex-start
+  gap: 20px
+
+.with-image
+  display: flex
+  align-items: flex-start
+
+  .section-image
+    flex-shrink: 0
+    width: 300px /* Povećana širina slike */
+    height: auto
+    border-radius: 10px
+    margin-right: 20px /* Povećan razmak između slike i teksta */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1)
+
+.text-content
+  flex-grow: 1
 
 .section-title
   font-size: 1.3rem

@@ -1,50 +1,58 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-  </q-layout>
+  <div :data-theme="$q.dark.isActive ? 'dark' : 'light'">
+    <router-view />
+  </div>
 </template>
 
 <script setup>
-import { ref, provide, watch } from "vue";
-import { useI18n } from "vue-i18n";
+import { watch } from "vue";
+import { useQuasar } from "quasar";
 
-// Inicijalne postavke jezika i veličine teksta
-const { locale } = useI18n({ useScope: "global" });
-const textSize = ref("medium");
+const $q = useQuasar();
 
-// Promjena veličine teksta na temelju postavke
-const applyTextSize = (size) => {
-  document.documentElement.style.setProperty(
-    "--text-size",
-    {
-      small: "14px",
-      medium: "16px",
-      large: "18px",
-    }[size]
-  );
-};
-applyTextSize(textSize.value);
-
-// Pratimo promjene veličine teksta
-watch(textSize, (newSize) => {
-  applyTextSize(newSize);
-});
-
-// Pratimo promjene jezika
-watch(locale, (newLocale) => {
-  locale.value = newLocale;
-});
-
-// Pružanje postavki cijeloj aplikaciji
-provide("textSize", textSize);
-provide("locale", locale);
+watch(
+  () => $q.dark.isActive,
+  () => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      $q.dark.isActive ? "dark" : "light"
+    );
+  }
+);
 </script>
 
 <style>
-/* Postavljanje prilagodljive veličine teksta za cijelu aplikaciju */
-html {
-  font-size: var(--text-size, 16px);
+:root {
+  --page-background-color-light: #ffffff;
+  --card-background-color-light: #f9f9f9;
+  --button-background-color-light: #42ffbd;
+  --button-text-color-light: #ffffff;
+  --link-color-light: #42ffbd;
+
+  --page-background-color-dark: #121212;
+  --card-background-color-dark: #1e1e1e;
+  --button-background-color-dark: #42ffbd;
+  --button-text-color-dark: #ffffff;
+  --link-color-dark: #42ffbd;
+}
+
+[data-theme="light"] {
+  --page-background-color: var(--page-background-color-light);
+  --card-background-color: var(--card-background-color-light);
+  --button-background-color: var(--button-background-color-light);
+  --button-text-color: var(--button-text-color-light);
+  --link-color: var(--link-color-light);
+}
+
+[data-theme="dark"] {
+  --page-background-color: var(--page-background-color-dark);
+  --card-background-color: var(--card-background-color-dark);
+  --button-background-color: var(--button-background-color-dark);
+  --button-text-color: var(--button-text-color-dark);
+  --link-color: var(--link-color-dark);
+}
+
+body {
+  background-color: var(--page-background-color);
 }
 </style>

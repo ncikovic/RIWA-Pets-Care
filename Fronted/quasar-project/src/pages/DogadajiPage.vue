@@ -36,12 +36,12 @@ import FullCalendar from "@fullcalendar/vue"; // FullCalendar komponenta
 import dayGridPlugin from "@fullcalendar/daygrid"; // Kalendar sa mjesečnim pregledom
 import interactionPlugin from "@fullcalendar/interaction"; // Za interakciju sa kalendarom
 import { date } from "quasar";
-import eventData from "~assets/events.json"; // Import podataka iz events.json
+//import eventData from "@assets/events.json"; // Import podataka iz events.json
 
-// Postavke za kalendar
+/*// Postavke za kalendar
 const events = ref(eventData); // Podaci događaja preuzeti iz JSON-a
 const selectedEvent = ref(null); // Detalji za selektirani događaj
-const calendarPlugins = [dayGridPlugin, interactionPlugin]; // Pluginovi za kalendar
+const calendarPlugins = [dayGridPlugin, interactionPlugin]; // Pluginovi za kalendar*/
 
 // Formatiranje datuma za Vue
 const formatDate = (date) => {

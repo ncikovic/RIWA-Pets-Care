@@ -126,8 +126,7 @@
             <p>NAZIV DOGAĐAJA: Winter Pet Walk</p>
             <p>MJESTO DOGAĐAJA: Pula, Park Verudela</p>
             <p>
-              OPIS: Zimska šetnja za kućne ljubimce i njihove vlasnike s
-              nagradama za najljepše obučene ljubimce.
+              OPIS: Zimska šetnja za kućne ljubimce i njihove vlasnike s nagradama za najljepše obučene ljubimce.
             </p>
           </q-tab-panel>
 

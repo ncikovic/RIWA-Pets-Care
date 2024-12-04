@@ -10,9 +10,10 @@
     <q-input
       v-model="searchQuery"
       label="Pretraži veterinare"
-      placeholder="Upišite ime, prezime, specijalizaciju ili specijalizaciju za životinje"
+      placeholder="Upišite ime, prezime ili specijalizaciju za životinje"
       debounce="300"
       class="q-mb-md"
+      outlined
     />
 
     <q-table
@@ -35,20 +36,18 @@ export default {
           id: 1,
           ime: "Marko",
           prezime: "Horvat",
-          lokacija: "Zagreb",
+          lokacija: "Zagreb, Ulica grada Vukovara 184",
           radno_vrijeme: "Pon - Pet: 08:00 - 16:00",
-          specijalizacija: "Opća praksa",
           kontakt_email: "marko.horvat@email.com",
           kontakt_telefon: "091 234 5678",
-          specijalizacija_za: "Klasične ljubimce",
+          specijalizacija_za: "Psi, Mačke",
         },
         {
           id: 2,
           ime: "Ana",
           prezime: "Kovač",
-          lokacija: "Split",
+          lokacija: "Split, Obala kneza Domagoja 5",
           radno_vrijeme: "Pon - Pet: 09:00 - 17:00",
-          specijalizacija: "Kirurgija",
           kontakt_email: "ana.kovac@email.com",
           kontakt_telefon: "098 765 4321",
           specijalizacija_za: "Psi, Mačke",
@@ -57,31 +56,28 @@ export default {
           id: 3,
           ime: "Ivana",
           prezime: "Petrović",
-          lokacija: "Rijeka",
+          lokacija: "Rijeka, Zagrebačka 20",
           radno_vrijeme: "Pon - Pet: 08:30 - 15:30",
-          specijalizacija: "Dermatologija",
           kontakt_email: "ivana.petrovic@email.com",
           kontakt_telefon: "091 112 2334",
-          specijalizacija_za: "Male životinje",
+          specijalizacija_za: "Psi, Mačke, Ptice",
         },
         {
           id: 4,
           ime: "Luka",
           prezime: "Simek",
-          lokacija: "Osijek",
+          lokacija: "Osijek, Trg Ante Starčevića 4",
           radno_vrijeme: "Pon - Pet: 10:00 - 18:00",
-          specijalizacija: "Stomatologija",
           kontakt_email: "luka.simek@email.com",
           kontakt_telefon: "099 334 4556",
-          specijalizacija_za: "Psi, Mačke, Zečevi",
+          specijalizacija_za: "Psi, Mačke",
         },
         {
           id: 5,
           ime: "Petra",
           prezime: "Jurić",
-          lokacija: "Rijeka",
+          lokacija: "Rijeka, Adamićeva 7",
           radno_vrijeme: "Pon - Pet: 08:00 - 14:00",
-          specijalizacija: "Interna medicina",
           kontakt_email: "petra.juric@email.com",
           kontakt_telefon: "091 654 9876",
           specijalizacija_za: "Psi, Mačke, Zmije",
@@ -90,31 +86,28 @@ export default {
           id: 6,
           ime: "Ivan",
           prezime: "Tomić",
-          lokacija: "Pula",
+          lokacija: "Pula, Veruda 12",
           radno_vrijeme: "Pon - Pet: 09:00 - 16:00",
-          specijalizacija: "Kardiologija",
           kontakt_email: "ivan.tomic@email.com",
           kontakt_telefon: "098 123 4567",
-          specijalizacija_za: "Hrčci, Zamorci, Zečevi",
+          specijalizacija_za: "Psi, Mačke",
         },
         {
           id: 7,
           ime: "Maja",
           prezime: "Zorić",
-          lokacija: "Dubrovnik",
+          lokacija: "Dubrovnik, Lapad 15",
           radno_vrijeme: "Pon - Pet: 08:30 - 17:00",
-          specijalizacija: "Zoološki veterinar",
           kontakt_email: "maja.zoric@email.com",
           kontakt_telefon: "091 555 6677",
-          specijalizacija_za: "Egzotične vrste",
+          specijalizacija_za: "Ptice, Kameleoni, Zmije",
         },
         {
           id: 8,
           ime: "Nikola",
           prezime: "Ivić",
-          lokacija: "Zagreb",
+          lokacija: "Zagreb, Trg bana Jelačića 1",
           radno_vrijeme: "Pon - Pet: 10:00 - 18:00",
-          specijalizacija: "Onkologija",
           kontakt_email: "nikola.ivic@email.com",
           kontakt_telefon: "099 666 7777",
           specijalizacija_za: "Psi, Mačke",
@@ -123,20 +116,18 @@ export default {
           id: 9,
           ime: "Jana",
           prezime: "Lukić",
-          lokacija: "Osijek",
+          lokacija: "Osijek, Državni trg 2",
           radno_vrijeme: "Pon - Pet: 08:00 - 16:00",
-          specijalizacija: "Medicina egzotičnih životija",
           kontakt_email: "jana.lukic@email.com",
           kontakt_telefon: "091 789 1234",
-          specijalizacija_za: "Egzotične ljubimce",
+          specijalizacija_za: "Psi, Mačke, Ptice",
         },
         {
           id: 10,
           ime: "Karla",
           prezime: "Šarić",
-          lokacija: "Zadar",
+          lokacija: "Zadar, Obala kralja Petra Krešimira 2",
           radno_vrijeme: "Pon - Pet: 09:00 - 15:00",
-          specijalizacija: "Neurologija",
           kontakt_email: "karla.saric@email.com",
           kontakt_telefon: "098 234 5678",
           specijalizacija_za: "Psi, Mačke, Zmije",
@@ -157,12 +148,6 @@ export default {
           name: "radno_vrijeme",
           label: "Radno vrijeme",
           field: "radno_vrijeme",
-          align: "left",
-        },
-        {
-          name: "specijalizacija",
-          label: "Specijalizacija",
-          field: "specijalizacija",
           align: "left",
         },
         {
@@ -193,7 +178,6 @@ export default {
         return (
           vet.ime.toLowerCase().includes(query) ||
           vet.prezime.toLowerCase().includes(query) ||
-          vet.specijalizacija.toLowerCase().includes(query) ||
           vet.specijalizacija_za.toLowerCase().includes(query)
         );
       });
@@ -203,51 +187,74 @@ export default {
 </script>
 
 <style scoped>
+/* Naslov */
 h1 {
   font-size: 2.5rem;
   color: #422c50;
   margin-bottom: 20px;
+  font-weight: bold;
 }
 
+/* Podnaslov */
 p {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   color: #7f8c8d;
   margin-bottom: 40px;
 }
 
+/* Stil za tablicu */
 .q-table {
   max-width: 100%;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-x: auto; /* Omogućava pomicanje tablice na manjim ekranima */
 }
 
-.q-table th,
-.q-table td {
+/* Stil za naslov tablice */
+.q-table th {
+  background-color: #8537cf;
+  color: #fff;
   padding: 12px;
+  font-weight: bold;
   text-align: left;
 }
 
-.q-table th {
-  background-color: #8537cf;
-  color: #34495e;
-}
-
+/* Stil za ćelije tablice */
 .q-table td {
-  color: #7f8c8d;
+  padding: 12px;
+  color: #7bc1c6;
+  font-size: 1rem;
 }
 
+/* Razmak između tablice i drugih elemenata */
 .q-my-md {
   margin-top: 40px;
   margin-bottom: 40px;
 }
 
+/* Centriranje teksta */
 .text-center {
   text-align: center;
 }
 
-.q-btn {
-  background: #7434db;
-  color: rgb(148, 85, 231);
-  border-radius: 8px;
+/* Responsivni dizajn za manje ekrane */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+
+  .q-table th,
+  .q-table td {
+    padding: 8px;
+  }
+
+  .q-my-md {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
 }
 </style>

@@ -1,45 +1,35 @@
 <template>
   <q-page class="q-pa-md">
-    <h1>Postavke</h1>
-    <q-card-section class="q-pt-none">
-      <!-- Dark Mode Postavka -->
-      <q-toggle
-        v-model="darkMode"
-        :label="$t('darkMode')"
-        @update:model-value="changeDarkMode"
-      />
+    <q-card>
+      <q-card-section class="q-pt-none">
+        <h1 class="text-center custom-title">{{ $t('Postavke') }}</h1>
 
-      <!-- Opcije jezika -->
-      <q-select
-        v-model="currentLang"
-        :options="languages"
-        dense
-        emit-value
-        map-options
-        options-dense
-        @update:model-value="changeLanguage"
-        :label="$t('language')"
-      />
+        <q-separator />
 
-      <!-- Postavka za zvuk obavijesti -->
-      <q-toggle
-        v-model="notifications"
-        :label="$t('notifications')"
-        @update:model-value="changeNotifications"
-      />
+        <!-- Dark Mode Postavka -->
+        <q-toggle
+          v-model="darkMode"
+          :label="$t('darkMode')"
+          @update:model-value="changeDarkMode"
+          color="primary"
+          class="q-mb-md"
+        />
 
-      <!-- Postavka za veličinu teksta -->
-      <q-select
-        v-model="textSize"
-        :options="textSizeOptions"
-        dense
-        emit-value
-        map-options
-        options-dense
-        @update:model-value="changeTextSize"
-        :label="$t('textSize')"
-      />
-    </q-card-section>
+        <!-- Postavka za veličinu teksta -->
+        <q-select
+          v-model="textSize"
+          :options="textSizeOptions"
+          dense
+          emit-value
+          map-options
+          options-dense
+          @update:model-value="changeTextSize"
+          :label="$t('textSize')"
+          color="primary"
+          class="q-mb-md"
+        />
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
 
@@ -57,26 +47,6 @@ const changeDarkMode = () => {
   $q.dark.toggle();
 };
 
-// Opcije jezika
-const currentLang = ref("hr");
-const languages = [
-  { value: "en", label: "English" },
-  { value: "hr", label: "Hrvatski" },
-  { value: "de", label: "Deutsch" },
-  { value: "fr", label: "Français" },
-  { value: "es", label: "Español" },
-];
-const changeLanguage = (value) => {
-  locale.value = value;
-  currentLang.value = value;
-};
-
-// Zvuk obavijesti postavka
-const notifications = ref(false);
-const changeNotifications = () => {
-  notifications.value = !notifications.value;
-};
-
 // Veličina teksta postavka
 const textSize = ref("medium");
 const textSizeOptions = [
@@ -90,7 +60,26 @@ const changeTextSize = (value) => {
 </script>
 
 <style scoped>
-h1 {
-  color: #6619d2;
+/* Stilizacija naslova za lijep izgled */
+.custom-title {
+  color: #422c50; /* Purple boja */
+  font-weight: bold;
+  font-size: 2rem; /* Veličina fonta */
+  text-align: center; /* Centriranje naslova */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Efekt sjenčanja */
+  margin-bottom: 20px; /* Razmak ispod naslova */
+}
+
+.q-card {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.q-toggle, .q-select {
+  width: 100%;
+}
+
+.q-separator {
+  margin: 20px 0;
 }
 </style>

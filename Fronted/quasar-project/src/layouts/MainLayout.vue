@@ -11,10 +11,17 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title class="text-h4 main-heading">
+        <q-toolbar-title class="text-h3">
           Pets&Care web aplication
         </q-toolbar-title>
-        <img class="nav-logo" src="../assets/Pets&Care.svg" @click="returnHome" alt="">
+
+        <!-- Logo sa stiliziranim klikom na njega -->
+        <img
+          class="nav-logo"
+          src="../assets/Pets&Care.svg"
+          @click="returnHome"
+          alt="Pets&Care logo"
+        />
       </q-toolbar>
     </q-header>
 
@@ -35,13 +42,6 @@
     </q-page-container>
   </q-layout>
 </template>
-
-<style>
-/* Postavljanje prilagodljive veličine teksta za cijelu aplikaciju */
-html {
-  font-size: var(--text-size, 16px);
-}
-</style>
 
 <script setup>
 import { ref } from "vue";
@@ -102,17 +102,21 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
-
-
-</script>
-
-
-<script>
-export default {
-  methods: {
-    returnHome() {
-      this.$router.push('/')
-    }
-  }
+function returnHome() {
+  router.push('/');
 }
 </script>
+
+<style scoped>
+/* Postavljanje prilagodljive veličine teksta za cijelu aplikaciju */
+html {
+  font-size: var(--text-size, 16px);
+}
+
+/* Stil za logo */
+.nav-logo {
+  width: 80px; /* Povećali smo veličinu loga */
+  cursor: pointer; /* Pokazivač za klik */
+  margin-left: auto; /* Poravnava logo na desnu stranu */
+}
+</style>

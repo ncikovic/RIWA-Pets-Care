@@ -2,21 +2,20 @@
   <q-page padding>
     <div class="content">
       <header>
-        <h1 class="title text-primary">Pets&Care</h1>
-        <h2 class="subtitle">O nama</h2>
+        <h1 class="text-center">Pets&Care</h1>
       </header>
 
       <!-- Sekcija sa slikom i uvodom -->
       <section class="section with-image">
-        <img
-          src="~assets\doberman-photo.jpg"
-          alt="Pets and Care"
-          class="section-image"
-        />
         <div class="text-content">
           <h3 class="section-title">Uvod</h3>
           <p v-html="aboutInfo.intro"></p>
         </div>
+        <img
+          src="~assets/doberman-photo.jpg"
+          alt="Pets and Care"
+          class="section-image"
+        />
       </section>
 
       <section class="section">
@@ -49,49 +48,87 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped>
-.content
-  max-width: 800px
-  margin: 0 auto
-  text-align: left
-  color: #333
+<style scoped>
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+  color: #333;
+  padding: 20px;
+}
 
-.title
-  font-size: 2.5rem
-  margin-bottom: 0.5em
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #422c50;
+}
 
-.subtitle
-  font-size: 1.5rem
-  margin-bottom: 1.5em
-  color: #666
+.section {
+  margin-bottom: 2em;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
 
-.section
-  margin-bottom: 2em
-  display: flex
-  align-items: flex-start
-  gap: 20px
+.with-image {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
 
-.with-image
-  display: flex
-  align-items: flex-start
+.section-image {
+  flex-shrink: 0;
+  width: 45%; /* Slika zauzima manje od polovice širine ekrana */
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
 
-  .section-image
-    flex-shrink: 0
-    width: 300px /* Povećana širina slike */
-    height: auto
-    border-radius: 10px
-    margin-right: 20px /* Povećan razmak između slike i teksta */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1)
+.text-content {
+  flex-grow: 1;
+  width: 50%; /* Tekst zauzima polovicu širine ekrana */
+  padding-left: 20px;
+  text-align: justify;
+}
 
-.text-content
-  flex-grow: 1
+.section-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  color: #374151;
+}
 
-.section-title
-  font-size: 1.3rem
-  margin-bottom: 0.5em
-  color: #444
+p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #4b5563;
+}
 
-p
-  font-size: 1.1rem
-  line-height: 1.6
+/* Media Queries */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .section {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .section-image {
+    width: 100%; /* Slika zauzima punu širinu ekrana na mobilnim uređajima */
+  }
+
+  .text-content {
+    width: 100%; /* Tekst zauzima punu širinu ekrana na mobilnim uređajima */
+    padding-left: 0;
+    text-align: center;
+  }
+}
 </style>

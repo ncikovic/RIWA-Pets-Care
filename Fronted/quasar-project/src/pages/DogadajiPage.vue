@@ -1,9 +1,9 @@
 <template>
   <div>
-    <q-splitter v-model="splitterModel" style="height: 450px">
+    <q-splitter v-model="splitterModel" style="height: 550px">
       <template v-slot:before>
         <div class="q-pa-md">
-          <q-date v-model="date" :events="events" event-color="orange" />
+          <q-date v-model="date" :events="events" event-color="lime green" />
         </div>
       </template>
 

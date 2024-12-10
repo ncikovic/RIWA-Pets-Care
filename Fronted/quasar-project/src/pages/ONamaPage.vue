@@ -2,14 +2,14 @@
   <q-page padding>
     <div class="content">
       <header>
-        <h1 class="text-center">Pets&Care</h1>
+        <h1 class="text-center bijela">Pets&Care</h1>
       </header>
 
       <!-- Sekcija sa slikom i uvodom -->
-      <section class="section with-image">
+      <section class="section with-image ">
         <div class="text-content">
-          <h3 class="section-title">Uvod</h3>
-          <p v-html="aboutInfo.intro"></p>
+          <h3 class="section-title bijela">Uvod</h3>
+          <p class="siva" v-html="aboutInfo.intro"></p>
         </div>
         <img
           src="~assets/doberman-photo.jpg"
@@ -19,13 +19,13 @@
       </section>
 
       <section class="section">
-        <h3 class="section-title">Misija</h3>
-        <p>{{ aboutInfo.mission }}</p>
+        <h3 class="section-title bijela">Misija</h3>
+        <p class="siva">{{ aboutInfo.mission }}</p>
       </section>
 
       <section class="section">
-        <h3 class="section-title">Glavni cilj aplikacije</h3>
-        <p v-html="aboutInfo.goal"></p>
+        <h3 class="section-title bijela">Glavni cilj aplikacije</h3>
+        <p class="siva" v-html="aboutInfo.goal"></p>
       </section>
     </div>
   </q-page>

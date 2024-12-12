@@ -5,11 +5,6 @@ require("dotenv").config();
 const mysql = require("mysql");
 
 const app = express();
-const port = 3000;
-
-app.listen(port, () => {
-  console.log("Server running at port: " + port);
-});
 
 // Parser za JSON podatke
 app.use(bodyParser.json());
@@ -21,7 +16,8 @@ const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT,
 });
 
 connection.connect((err) => {
@@ -41,6 +37,14 @@ connection.connect(function (err) {
 });
 */
 
+//Dohvaćanje svih korisnika iz baze
+app.get("/api/users", (req, res) => {
+  connection.query("SELECT * FROM Korisnik", (err, results) => {
+    if (err) throw err;
+    res.send(results);
+  });
+});
+
 // Dohvaćanje svih ljubimaca
 app.get("/api/pets", (req, res) => {
   connection.query("SELECT * FROM Ljubimac", (error, results) => {
@@ -52,8 +56,8 @@ app.get("/api/pets", (req, res) => {
       RESPONSE - slanje odgovora sa serverske strane
   
       npm install -g nodemon
-    */
-  res.send("popis_ljubimaca");
+  */
+  //res.send("popis_ljubimaca");
 });
 
 // Dohvaćanje jednog ljubimca prema ID-u
@@ -89,13 +93,6 @@ app.get("/api/veterinarians/:id", (req, res) => {
       res.send(results[0]); // Pretpostavljamo da vraćamo samo jednog veterinara
     }
   );
-});
-
-app.get("/api/users", (req, res) => {
-  connection.query("SELECT * FROM Korisnik", (err, results) => {
-    if (err) throw err;
-    res.send(results);
-  });
 });
 
 // 2. GET: Lista ljubimaca po vrsti životinje
@@ -187,7 +184,7 @@ app.put("/api/pets/:SIFRA_LJUBIMCA", (req, res) => {
 });
 
 // 7. PUT: Ažuriranje podataka o jednom događaju
-app.put("/api/dogadaji/:id", (req, res) => {
+app.put("/api/dogadaji/:SIFRA_DOGADAJA", (req, res) => {
   const { SIFRA_DOGADAJA } = req.params.SIFRA_DOGADAJA;
   const {
     naziv_dogadaja,
@@ -206,7 +203,7 @@ app.put("/api/dogadaji/:id", (req, res) => {
       adresa_dogadaja,
       datum_dogadaja,
       vrijeme_dogadaja,
-      SIFRA_DOGADAJAIFRA_DOGADAJA,
+      SIFRA_DOGADAJA,
     ],
     (err, results) => {
       if (err) throw err;
@@ -216,8 +213,8 @@ app.put("/api/dogadaji/:id", (req, res) => {
 });
 
 // 8. PUT: Ažuriranje podataka o jednom veterinaru
-app.put("/api/veterinarians/:id", (req, res) => {
-  const { ŠIFRA_VETERINARA } = req.params;
+app.put("/api/veterinarians/:SIFRA_VETERINARA", (req, res) => {
+  const { SIFRA_VETERINARA } = req.params.SIFRA_VETERINARA;
   const {
     ime_veterinara,
     prezime_veterinara,
@@ -284,9 +281,8 @@ app.post("/api/zdravstveniKarton", (req, res) => {
   );
 });
 
-/*Pokretanje servera
+//Pokretanje servera
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-*/

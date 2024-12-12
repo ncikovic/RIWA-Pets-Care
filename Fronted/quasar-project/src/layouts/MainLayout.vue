@@ -102,10 +102,17 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
-function returnHome() {
-  router.push('/');
-}
 </script>
+
+<script>
+export default {
+  name: 'ImageNavigation',
+  methods: {
+    returnHome() {
+      this.$router.push('/');
+    }
+  }
+};</script>
 
 <style scoped>
 /* Postavljanje prilagodljive veličine teksta za cijelu aplikaciju */

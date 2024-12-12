@@ -1,3 +1,4 @@
+
 .main-heading {
   padding: 2% 2%;
 }
@@ -14,3 +15,35 @@
   transform: scale(1.1);
   cursor: pointer;
 }
+
+.pocrnit{
+  color:var(--crna-color)!important;
+}
+
+.pozadina_crna{
+  background-color:var(--page-background-color)!important;
+  
+}
+
+.bijela{
+  color:var( --bijela) !important;
+}
+
+.siva{
+  color:var( --siva) !important;
+
+}
+
+.obojaj_logo{
+  filter:var(--filter);
+}
+
+.dugme{
+  padding:1rem 2rem;
+  border-radius: 10vw;
+  width:70%;
+  margin:0 auto;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+

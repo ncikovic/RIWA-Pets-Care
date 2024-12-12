@@ -25,7 +25,7 @@
           transition-next="jump-up"
         >
           <q-tab-panel v-for="event in events" :name="event" :key="event">
-            <div class="event-detail">
+            <div class="event-detail pocrnit">
               <div class="text-h4 q-mb-md">{{ event }}</div>
               <p>
                 <strong>NAZIV DOGAĐAJA:</strong> {{ eventDetails[event].name }}

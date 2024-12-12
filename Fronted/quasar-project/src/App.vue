@@ -53,6 +53,12 @@ watch(
   --button-background-color: var(--button-background-color-dark);
   --button-text-color: var(--button-text-color-dark);
   --link-color: var(--link-color-dark);
+  --crna-color: #000000;
+  --ljubicasta:#6d16c4;
+  --siva:#a8a8a8;
+  --bijela:#ffffff;
+  --filter:invert(100%) sepia(15%) saturate(652%) hue-rotate(181deg)
+  brightness(115%) contrast(100%);
 }
 
 body {

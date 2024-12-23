@@ -119,6 +119,16 @@ function navigateTo(route) {
 }
 </script>
 
+<script>
+export default {
+  name: 'ImageNavigation',
+  methods: {
+    returnHome() {
+      this.$router.push('/');
+    }
+  }
+};</script>
+
 <style scoped>
 .custom-title {
   font-weight: bold;

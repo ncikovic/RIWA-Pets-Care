@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-md flex justify-center items-center">
-    <div class="form-container">
-      <h1 class="text-center">Registracija</h1>
+    <div class="form-container pozadina_crna">
+      <h1 class="text-center bijela">Registracija</h1>
       <p class="text-center">Registrirajte se kako biste dobili pristup našem sistemu.</p>
 
       <!-- Ime -->

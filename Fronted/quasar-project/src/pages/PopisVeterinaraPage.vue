@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <h1 class="text-center">Popis Veterinara</h1>
+    <h1 class="text-center bijela">Popis Veterinara</h1>
     <p class="text-center">
       Ovdje možete pronaći popis svih veterinara koji su dostupni u našem
       sustavu.

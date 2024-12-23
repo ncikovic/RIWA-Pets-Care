@@ -5,12 +5,12 @@
       <img
         alt="Pets&Care"
         src="~assets/Pets&Care.svg"
-        class="logo animate-logo obojaj_logo"
+        class="logo animate-logo"
       />
 
       <!-- Dodajemo naslov i opis -->
-      <h1 class="page-title bijela">Welcome to Pets&Care</h1>
-      <p class="page-description siva">
+      <h1 class="page-title">Welcome to Pets&Care</h1>
+      <p class="page-description">
         Your one-stop solution for pet care. Explore services, find tips, and
         join our community of pet lovers!
       </p>
@@ -21,14 +21,14 @@
           label="SAZNAJ VIŠE O NAMA"
           color="primary"
           @click="navigateTo('o_nama')"
-          class="action-btn dugme"
+          class="action-btn"
         />
         <q-btn
           label="PRIKLJUČI SE NAŠOJ ZAJEDNICI"
           color="secondary"
           outline
           @click="navigateTo('registracijaKorisnika')"
-          class="action-btn dugme"
+          class="action-btn"
         />
       </div>
     </div>

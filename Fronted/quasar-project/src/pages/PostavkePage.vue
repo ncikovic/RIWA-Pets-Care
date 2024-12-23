@@ -2,7 +2,7 @@
   <q-page class="q-pa-md">
     <q-card>
       <q-card-section class="q-pt-none">
-        <h1 class="text-center custom-title bijela">{{ $t('Postavke') }}</h1>
+        <h1 class="text-center custom-title">{{ $t('Postavke') }}</h1>
 
         <q-separator />
 

@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-md flex justify-center items-center">
-    <div class="form-container pozadina_crna">
-      <h1 class="text-center bijela">Registracija</h1>
+    <div class="form-container">
+      <h1 class="text-center">Registracija</h1>
       <p class="text-center">Registrirajte se kako biste dobili pristup našem sistemu.</p>
 
       <!-- Ime -->
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -64,17 +66,24 @@ export default {
     };
   },
   methods: {
-    registerUser() {
+    async registerUser() {
       // Provjera valjanosti forme
-      this.$refs.form.validate().then(success => {
-        if (success) {
-          // Logika za registraciju
-          console.log("Registrirani podaci:", this.form);
-          // Ovdje možete dodati funkcionalnost za slanje podataka na server
-        } else {
-          console.log("Formular nije ispravan");
+      if (this.isFormValid()) {
+        try {
+          const response = await axios.post("http://localhost:3000/api/registracija", this.form);
+          console.log("Registracija uspješna:", response.data);
+          alert("Registracija je uspješno izvršena!");
+        } catch (error) {
+          console.error("Greška pri registraciji:", error);
+          alert("Došlo je do greške pri registraciji.");
         }
-      });
+      } else {
+        alert("Molimo popunite sva obavezna polja.");
+      }
+    },
+    isFormValid() {
+      // Provjera da li su svi podaci uneseni
+      return this.form.name && this.form.email && this.form.username && this.form.password && this.form.password.length >= 6;
     },
   },
 };

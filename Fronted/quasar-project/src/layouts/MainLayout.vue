@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated class="custom-header">
       <q-toolbar>
         <q-btn
           flat
@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title class="text-h3">
-          Pets&Care web application
+          Pets&Care web aplication
         </q-toolbar-title>
 
         <!-- Logo aplikacije s navigacijom na početnu stranicu -->
@@ -71,15 +71,24 @@
       </q-toolbar>
     </q-header>
 
-    <!-- LIJEVI IZBORNIK (Drawer) -->
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header>Essential Links</q-item-label>
+        <q-item-label header> Essential Links </q-item-label>
+
         <EssentialLink
           v-for="link in linksList"
           :key="link.title"
-          v-bind="link"
-        />
+          clickable
+          @click="navigateTo(link.link)"
+        >
+          <q-item-section avatar>
+            <q-icon :name="link.icon" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ link.title }}</q-item-label>
+            <q-item-label caption>{{ link.caption }}</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -92,7 +101,7 @@
 
 <script setup>
 import { ref } from "vue";
-import EssentialLink from "components/EssentialLink.vue";
+import { useRouter } from "vue-router";
 
 defineOptions({
   name: "MainLayout",
@@ -100,82 +109,68 @@ defineOptions({
 
 // Lista linkova za lijevi izbornik
 const linksList = [
-  { title: "Početna stranica", caption: "Početna", icon: "home", link: "#/" },
+  {
+    title: "Početna stranica",
+    caption: "Početna",
+    icon: "home",
+    link: "#/",
+  },
   {
     title: "O nama",
     caption: "Saznaj o Pets&Care zajednici!",
-    icon: "pets",
+    icon: "favourite",
     link: "#/o_nama",
   },
   {
     title: "Događaji",
     caption: "Pretraži nadolazeće događaje.",
     icon: "event",
-    link: "#/dogadaji",
+    link: "/dogadaji",
   },
   {
     title: "Popis veterinara",
     caption: "Tražiš li veterinara?",
     icon: "search",
-    link: "#/popisVeterinara",
+    link: "/popisVeterinara",
   },
   {
     title: "Prijava korisnika",
     caption: "Prijavi se u svoj račun!",
     icon: "login",
-    link: "#/prijavaKorisnika",
+    link: "/prijavaKorisnika",
   },
   {
     title: "Registracija korisnika",
     caption: "Nemaš račun? Registriraj se!",
     icon: "app_registration",
-    link: "#/registracijaKorisnika",
+    link: "/registracijaKorisnika",
+  },
+  {
+    title: "Postavke",
+    caption: "Postavke",
+    icon: "settings",
+    link: "#/postavke",
   },
 ];
 
-// Kontrola otvaranja lijevog izbornika (drawer)
 const leftDrawerOpen = ref(false);
+
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
-// Drop-down meni
-const menu = ref(false);
-
-// Stanje korisničke prijave
-const isLoggedIn = ref(false);
-
-// Navigacija na odabrane stranice
-function navigateTo(page) {
-  menu.value = false;
-  console.log(`Navigacija na: ${page}`);
-  // Ovo možete zamijeniti sa stvarnom navigacijom, npr.:
-  // this.$router.push({ name: page });
-}
-
-// Login/Logout akcija
-function toggleLoginLogout() {
-  isLoggedIn.value = !isLoggedIn.value;
-  console.log(isLoggedIn.value ? "Korisnik prijavljen" : "Korisnik odjavljen");
-  menu.value = false;
-}
-
-// Navigacija na početnu stranicu
-function returnHome() {
-  window.location.href = "/";
-}
 </script>
 
 <style scoped>
-/* Stil za logo */
-.nav-logo {
-  width: 80px;
-  cursor: pointer;
-  margin-right: auto;
+/* Postavljanje prilagodljive veličine teksta za cijelu aplikaciju */
+html {
+  font-size: var(--text-size, 16px);
 }
 
-/* Drop-down menu ikona (avatar) */
-.q-toolbar .q-btn {
-  margin-left: auto;
+/* Stil za logo */
+.nav-logo {
+  width: 80px; /* Povećali smo veličinu loga */
+  cursor: pointer; /* Pokazivač za klik */
+  margin-left: auto; /* Poravnava logo na desnu stranu */
 }
 </style>

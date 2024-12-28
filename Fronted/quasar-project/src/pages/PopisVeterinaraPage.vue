@@ -17,171 +17,64 @@
     />
 
     <q-table
-      :rows="filteredVeterinarians"
+      :rows="filteredVeterinari"
       :columns="columns"
-      row-key="id"
+      row-key="email_veterinara"
       class="q-my-md"
     />
   </q-page>
 </template>
 
 <script>
+import { ref, computed, onMounted } from "vue";
+import axios from "axios";
+
 export default {
-  data() {
-    return {
-      searchQuery: "", // Promjenjiva za pretragu
+  setup() {
+    const searchQuery = ref("");
+    const veterinari = ref([]);
 
-      veterinarians: [
-        {
-          id: 1,
-          ime: "Marko",
-          prezime: "Horvat",
-          lokacija: "Zagreb, Ulica grada Vukovara 184",
-          radno_vrijeme: "Pon - Pet: 08:00 - 16:00",
-          kontakt_email: "marko.horvat@email.com",
-          kontakt_telefon: "091 234 5678",
-          specijalizacija_za: "Psi, Mačke",
-        },
-        {
-          id: 2,
-          ime: "Ana",
-          prezime: "Kovač",
-          lokacija: "Split, Obala kneza Domagoja 5",
-          radno_vrijeme: "Pon - Pet: 09:00 - 17:00",
-          kontakt_email: "ana.kovac@email.com",
-          kontakt_telefon: "098 765 4321",
-          specijalizacija_za: "Psi, Mačke",
-        },
-        {
-          id: 3,
-          ime: "Ivana",
-          prezime: "Petrović",
-          lokacija: "Rijeka, Zagrebačka 20",
-          radno_vrijeme: "Pon - Pet: 08:30 - 15:30",
-          kontakt_email: "ivana.petrovic@email.com",
-          kontakt_telefon: "091 112 2334",
-          specijalizacija_za: "Psi, Mačke, Ptice",
-        },
-        {
-          id: 4,
-          ime: "Luka",
-          prezime: "Simek",
-          lokacija: "Osijek, Trg Ante Starčevića 4",
-          radno_vrijeme: "Pon - Pet: 10:00 - 18:00",
-          kontakt_email: "luka.simek@email.com",
-          kontakt_telefon: "099 334 4556",
-          specijalizacija_za: "Psi, Mačke",
-        },
-        {
-          id: 5,
-          ime: "Petra",
-          prezime: "Jurić",
-          lokacija: "Rijeka, Adamićeva 7",
-          radno_vrijeme: "Pon - Pet: 08:00 - 14:00",
-          kontakt_email: "petra.juric@email.com",
-          kontakt_telefon: "091 654 9876",
-          specijalizacija_za: "Psi, Mačke, Zmije",
-        },
-        {
-          id: 6,
-          ime: "Ivan",
-          prezime: "Tomić",
-          lokacija: "Pula, Veruda 12",
-          radno_vrijeme: "Pon - Pet: 09:00 - 16:00",
-          kontakt_email: "ivan.tomic@email.com",
-          kontakt_telefon: "098 123 4567",
-          specijalizacija_za: "Psi, Mačke",
-        },
-        {
-          id: 7,
-          ime: "Maja",
-          prezime: "Zorić",
-          lokacija: "Dubrovnik, Lapad 15",
-          radno_vrijeme: "Pon - Pet: 08:30 - 17:00",
-          kontakt_email: "maja.zoric@email.com",
-          kontakt_telefon: "091 555 6677",
-          specijalizacija_za: "Ptice, Kameleoni, Zmije",
-        },
-        {
-          id: 8,
-          ime: "Nikola",
-          prezime: "Ivić",
-          lokacija: "Zagreb, Trg bana Jelačića 1",
-          radno_vrijeme: "Pon - Pet: 10:00 - 18:00",
-          kontakt_email: "nikola.ivic@email.com",
-          kontakt_telefon: "099 666 7777",
-          specijalizacija_za: "Psi, Mačke",
-        },
-        {
-          id: 9,
-          ime: "Jana",
-          prezime: "Lukić",
-          lokacija: "Osijek, Državni trg 2",
-          radno_vrijeme: "Pon - Pet: 08:00 - 16:00",
-          kontakt_email: "jana.lukic@email.com",
-          kontakt_telefon: "091 789 1234",
-          specijalizacija_za: "Psi, Mačke, Ptice",
-        },
-        {
-          id: 10,
-          ime: "Karla",
-          prezime: "Šarić",
-          lokacija: "Zadar, Obala kralja Petra Krešimira 2",
-          radno_vrijeme: "Pon - Pet: 09:00 - 15:00",
-          kontakt_email: "karla.saric@email.com",
-          kontakt_telefon: "098 234 5678",
-          specijalizacija_za: "Psi, Mačke, Zmije",
-        },
-      ],
+    const columns = [
+      { name: "ime_veterinara", label: "Ime", field: "ime_veterinara", align: "left" },
+      { name: "prezime_veterinara", label: "Prezime", field: "prezime_veterinara", align: "left" },
+      { name: "lokacija_veterinara", label: "Lokacija", field: "lokacija_veterinara", align: "left" },
+      { name: "email_veterinara", label: "Kontakt (E-mail)", field: "email_veterinara", align: "left" },
+      { name: "kontakt_veterinara", label: "Kontakt (Telefon)", field: "kontakt_veterinara", align: "left" },
+      { name: "specijalizacija_veterinara", label: "Specijalizacija za", field: "specijalizacija_veterinara", align: "left" },
+    ];
 
-      columns: [
-        { name: "id", label: "ID", field: "id", align: "left" },
-        { name: "ime", label: "Ime", field: "ime", align: "left" },
-        { name: "prezime", label: "Prezime", field: "prezime", align: "left" },
-        {
-          name: "lokacija",
-          label: "Lokacija",
-          field: "lokacija",
-          align: "left",
-        },
-        {
-          name: "radno_vrijeme",
-          label: "Radno vrijeme",
-          field: "radno_vrijeme",
-          align: "left",
-        },
-        {
-          name: "kontakt_email",
-          label: "Kontakt (E-mail)",
-          field: "kontakt_email",
-          align: "left",
-        },
-        {
-          name: "kontakt_telefon",
-          label: "Kontakt (Telefon)",
-          field: "kontakt_telefon",
-          align: "left",
-        },
-        {
-          name: "specijalizacija_za",
-          label: "Specijalizacija za",
-          field: "specijalizacija_za",
-          align: "left",
-        },
-      ],
-    };
-  },
-  computed: {
-    filteredVeterinarians() {
-      const query = this.searchQuery.toLowerCase();
-      return this.veterinarians.filter((vet) => {
+    // Filtriranje podataka na temelju pretraživanja
+    const filteredVeterinari = computed(() => {
+      const query = searchQuery.value.toLowerCase();
+      return veterinari.value.filter((vet) => {
         return (
-          vet.ime.toLowerCase().includes(query) ||
-          vet.prezime.toLowerCase().includes(query) ||
-          vet.specijalizacija_za.toLowerCase().includes(query)
+          vet.ime_veterinara.toLowerCase().includes(query) ||
+          vet.prezime_veterinara.toLowerCase().includes(query) ||
+          vet.specijalizacija_veterinara.toLowerCase().includes(query)
         );
       });
-    },
+    });
+
+    // Dohvat podataka iz baze
+    const loadVeterinari = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/veterinari");
+        veterinari.value = response.data || [];
+      } catch (error) {
+        console.error("Greška pri učitavanju veterinara:", error);
+      }
+    };
+
+    onMounted(() => {
+      loadVeterinari();
+    });
+
+    return {
+      searchQuery,
+      veterinari,
+      columns,
+      filteredVeterinari,
+    };
   },
 };
 </script>

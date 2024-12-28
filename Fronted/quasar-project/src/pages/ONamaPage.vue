@@ -2,11 +2,11 @@
   <q-page padding>
     <div class="content">
       <header>
-        <h1 class="text-center bijela">Pets&Care</h1>
+        <h1 class="title text-center bijela">Pets&Care</h1>
       </header>
 
       <!-- Sekcija sa slikom i uvodom -->
-      <section class="section with-image ">
+      <section class="section with-image">
         <div class="text-content">
           <h3 class="section-title bijela">Uvod</h3>
           <p class="siva" v-html="aboutInfo.intro"></p>
@@ -25,7 +25,7 @@
 
       <section class="section">
         <h3 class="section-title bijela">Glavni cilj aplikacije</h3>
-        <p class="siva" v-html="aboutInfo.goal"></p>
+        <p  class="siva" v-html="aboutInfo.goal"></p>
       </section>
     </div>
   </q-page>
@@ -49,6 +49,7 @@ export default {
 </script>
 
 <style scoped>
+/* Osnovni stilovi */
 .content {
   max-width: 900px;
   margin: 0 auto;
@@ -109,26 +110,50 @@ p {
   color: #4b5563;
 }
 
-/* Media Queries */
+/* Media Queries za mobilne uređaje */
 @media (max-width: 768px) {
   .title {
     font-size: 2rem;
+    text-align: center;
   }
 
   .section {
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    text-align: center;
   }
 
   .section-image {
-    width: 100%; /* Slika zauzima punu širinu ekrana na mobilnim uređajima */
+    width: 80%; /* Slika zauzima 80% širine ekrana */
   }
 
   .text-content {
-    width: 100%; /* Tekst zauzima punu širinu ekrana na mobilnim uređajima */
+    width: 100%; /* Tekst zauzima punu širinu */
     padding-left: 0;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .title {
+    font-size: 1.8rem;
     text-align: center;
+  }
+
+  .section-title {
+    font-size: 1.2rem; /* Manja veličina naslova na najmanjim ekranima */
+  }
+
+  .section-image {
+    width: 100%; /* Slika zauzima punu širinu */
+  }
+
+  p {
+    font-size: 0.9rem; /* Manji font za najmanje ekrane */
   }
 }
 </style>

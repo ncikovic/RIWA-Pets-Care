@@ -1,14 +1,17 @@
 <template>
   <q-page class="q-pa-md flex justify-center items-center">
-    <div class="form-container pozadina_crna">
-      <h1 class="text-center bijela">Prijava</h1>
+    <div class="form-container">
+      <h1 class="text-center">Prijava</h1>
       <p class="text-center">Unesite svoje korisničke podatke za prijavu.</p>
 
-      <!-- Korisničko ime -->
+      <!-- Korisničko ime ili Email -->
       <q-input
-        v-model="username"
-        label="Korisničko ime"
-        :rules="[val => val && val.length > 0 || 'Korisničko ime je obavezno']"
+        v-model="usernameOrEmail"
+        label="Korisničko ime ili Email"
+        :rules="[
+          (val) =>
+            (val && val.length > 0) || 'Korisničko ime ili email je obavezno',
+        ]"
         lazy-rules
         class="q-mb-md"
       />
@@ -18,40 +21,72 @@
         v-model="password"
         label="Lozinka"
         type="password"
-        :rules="[val => val && val.length > 0 || 'Lozinka je obavezna']"
+        :rules="[(val) => (val && val.length > 0) || 'Lozinka je obavezna']"
         lazy-rules
         class="q-mb-md"
       />
 
       <!-- Potvrdi -->
-      <q-btn label="Potvrdi" color="primary" @click="loginUser" class="full-width-btn" />
+      <q-btn
+        label="Potvrdi"
+        color="primary"
+        @click="loginUser"
+        class="full-width-btn"
+      />
+
+      <!-- Poruka o uspjehu -->
+      <div v-if="loginSuccess" class="text-center text-green-500 mt-4">
+        Prijava uspješna!
+      </div>
     </div>
   </q-page>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
-      username: "",
+      usernameOrEmail: "",
       password: "",
+      loginSuccess: false, // Za prikazivanje poruke o uspjehu
     };
   },
   methods: {
-    loginUser() {
-      // Provjera da li su uneseni korisničko ime i lozinka
-      if (this.username && this.password) {
-        // Ako su podaci ispravni, obriši polja i preusmjeri korisnika
-        console.log("Podaci za prijavu:", this.username, this.password);
+    async loginUser() {
+      if (this.usernameOrEmail && this.password) {
+        // Provjerava da su oba unesena
+        const loginData = {
+          usernameOrEmail: this.usernameOrEmail,
+          password: this.password,
+        };
 
-        // Očisti input polja
-        this.username = "";
-        this.password = "";
+        try {
+          const response = await axios.get(
+            "http://localhost:3000/api/users",
+            loginData
+          );
+          console.log("Prijava uspješna:", response.data);
 
-        // Preusmjeri korisnika na stranicu Popis Knjiga
-        this.$router.push({ name: "PopisKnjigaPage" }); // Pretpostavka je da ruta ima naziv 'PopisKnjigaPage'
+          // Spremanje korisničkih podataka
+          localStorage.setItem("users", JSON.stringify(response.data.user));
+
+          // Postavi loginSuccess na true kako bi prikazao poruku
+          this.loginSuccess = true;
+
+          // Resetiraj korisničko ime i lozinku
+          this.usernameOrEmail = "";
+          this.password = "";
+
+          // Preusmjeravanje na početnu stranicu
+          this.$router.push("/");
+        } catch (error) {
+          console.error("Greška pri prijavi:", error);
+          alert(error.response ? error.response.data : "Došlo je do greške");
+        }
       } else {
-        alert("Molimo unesite korisničko ime i lozinku.");
+        alert("Molimo unesite korisničko ime/email i lozinku.");
       }
     },
   },

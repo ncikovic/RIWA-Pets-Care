@@ -12,23 +12,69 @@
         />
 
         <q-toolbar-title class="text-h3">
-          Pets&Care web aplication
+          Pets&Care web application
         </q-toolbar-title>
 
-        <!-- Logo sa stiliziranim klikom na njega -->
+        <!-- Logo aplikacije s navigacijom na početnu stranicu -->
         <img
           class="nav-logo"
           src="../assets/Pets&Care.svg"
           @click="returnHome"
           alt="Pets&Care logo"
         />
+
+        <!-- Avatar korisnika s drop-down menijem -->
+        <q-btn
+          flat
+          round
+          dense
+          icon="account_circle"
+          aria-label="Profile"
+          ref="menuButton"
+          @click="menu = !menu"
+        />
+        <q-menu
+          v-model="menu"
+          anchor="bottom right"
+          self="top right"
+          :target="$refs.menuButton"
+        >
+          <q-list>
+            <q-item clickable @click="navigateTo('/moj-racun')">
+              <q-item-section avatar>
+                <q-icon name="person" />
+              </q-item-section>
+              <q-item-section>Moj račun</q-item-section>
+            </q-item>
+            <q-item clickable @click="navigateTo('/moji-ljubimci')">
+              <q-item-section avatar>
+                <q-icon name="pets" />
+              </q-item-section>
+              <q-item-section>Moji ljubimci</q-item-section>
+            </q-item>
+            <q-item clickable @click="navigateTo('/postavke')">
+              <q-item-section avatar>
+                <q-icon name="settings" />
+              </q-item-section>
+              <q-item-section>Postavke</q-item-section>
+            </q-item>
+            <q-item clickable @click="toggleLoginLogout">
+              <q-item-section avatar>
+                <q-icon :name="isLoggedIn ? 'logout' : 'login'" />
+              </q-item-section>
+              <q-item-section>{{
+                isLoggedIn ? "Odjava" : "Prijava"
+              }}</q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
       </q-toolbar>
     </q-header>
 
+    <!-- LIJEVI IZBORNIK (Drawer) -->
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
+        <q-item-label header>Essential Links</q-item-label>
         <EssentialLink
           v-for="link in linksList"
           :key="link.title"
@@ -37,6 +83,7 @@
       </q-list>
     </q-drawer>
 
+    <!-- STRANICE APLIKACIJE -->
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -51,17 +98,13 @@ defineOptions({
   name: "MainLayout",
 });
 
+// Lista linkova za lijevi izbornik
 const linksList = [
-  {
-    title: "Početna stranica",
-    caption: "Početna",
-    icon: "home",
-    link: "#/",
-  },
+  { title: "Početna stranica", caption: "Početna", icon: "home", link: "#/" },
   {
     title: "O nama",
     caption: "Saznaj o Pets&Care zajednici!",
-    icon: "favourite",
+    icon: "pets",
     link: "#/o_nama",
   },
   {
@@ -84,46 +127,55 @@ const linksList = [
   },
   {
     title: "Registracija korisnika",
-    caption: "Nemaš račun?  Registriraj se!",
+    caption: "Nemaš račun? Registriraj se!",
     icon: "app_registration",
     link: "#/registracijaKorisnika",
   },
-  {
-    title: "Postavke",
-    caption: "Postavke",
-    icon: "settings",
-    link: "#/postavke",
-  },
 ];
 
+// Kontrola otvaranja lijevog izbornika (drawer)
 const leftDrawerOpen = ref(false);
-
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
-</script>
+// Drop-down meni
+const menu = ref(false);
 
-<script>
-export default {
-  name: 'ImageNavigation',
-  methods: {
-    returnHome() {
-      this.$router.push('/');
-    }
-  }
-};</script>
+// Stanje korisničke prijave
+const isLoggedIn = ref(false);
 
-<style scoped>
-/* Postavljanje prilagodljive veličine teksta za cijelu aplikaciju */
-html {
-  font-size: var(--text-size, 16px);
+// Navigacija na odabrane stranice
+function navigateTo(page) {
+  menu.value = false;
+  console.log(`Navigacija na: ${page}`);
+  // Ovo možete zamijeniti sa stvarnom navigacijom, npr.:
+  // this.$router.push({ name: page });
 }
 
+// Login/Logout akcija
+function toggleLoginLogout() {
+  isLoggedIn.value = !isLoggedIn.value;
+  console.log(isLoggedIn.value ? "Korisnik prijavljen" : "Korisnik odjavljen");
+  menu.value = false;
+}
+
+// Navigacija na početnu stranicu
+function returnHome() {
+  window.location.href = "/";
+}
+</script>
+
+<style scoped>
 /* Stil za logo */
 .nav-logo {
-  width: 80px; /* Povećali smo veličinu loga */
-  cursor: pointer; /* Pokazivač za klik */
-  margin-left: auto; /* Poravnava logo na desnu stranu */
+  width: 80px;
+  cursor: pointer;
+  margin-right: auto;
+}
+
+/* Drop-down menu ikona (avatar) */
+.q-toolbar .q-btn {
+  margin-left: auto;
 }
 </style>

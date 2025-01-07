@@ -113,7 +113,7 @@ const linksList = [
     title: "Početna stranica",
     caption: "Početna",
     icon: "home",
-    link: "",
+    link: "/",
   },
   {
     title: "O nama",
@@ -176,6 +176,11 @@ export default {
 };</script>
 
 <style scoped>
+.custom-header {
+  background: linear-gradient(135deg, #8be8ff, #6f24d8);
+  color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
 .custom-title {
   font-weight: bold;
   font-size: 2.5em;

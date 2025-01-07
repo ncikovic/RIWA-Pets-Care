@@ -99,17 +99,78 @@ function navigateTo(route) {
 </script>
 
 <style scoped>
+/* Glavni stil za naslov */
 .custom-title {
   font-weight: bold;
   font-size: 2.5em;
   text-transform: uppercase;
   color: #ffffff;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+/* Zaglavlje */
 .custom-header {
-  background-color: #5eade5;
+  background: linear-gradient(135deg, #4a90e2, #0052cc);
   color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
+
+/* Gumb za otvaranje izbornika */
 .q-btn {
-  color: rgb(163, 235, 253);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.q-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Navigacijski drawer */
+.q-drawer {
+  background: #1e1e2f;
+  color: #ffffff;
+}
+
+.q-list {
+  padding: 10px;
+}
+
+/* Stavke u meniju */
+.q-item {
+  transition: all 0.3s ease-in-out;
+  border-radius: 5px;
+}
+
+.q-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
+}
+
+/* Ikone u navigaciji */
+.q-item-section avatar {
+  color: #f5f5f5;
+}
+
+/* Aktivni link */
+.q-item--active {
+  background: rgba(255, 255, 255, 0.2);
+  border-left: 4px solid #ff9800;
+}
+
+/* Sadržaj stranice */
+.q-page-container {
+  background: #f4f7fc;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Tekst za dobrodošlicu */
+.q-toolbar div {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-left: auto;
+  color: #ffffff;
 }
 </style>

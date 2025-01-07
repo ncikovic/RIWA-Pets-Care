@@ -4,42 +4,20 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [
       { path: "", component: () => import("pages/IndexPage.vue") },
-      {
-        path: "/o_nama",
-        component: () => {
-          return import("pages/ONamaPage.vue");
-        },
-      },
-      {
-        path: "/dogadaji",
-        component: () => {
-          return import("pages/DogadajiPage.vue");
-        },
-      },
-      {
-        path: "/popisVeterinara",
-        component: () => {
-          return import("pages/PopisVeterinaraPage.vue");
-        },
-      },
-      {
-        path: "/prijavaKorisnika",
-        component: () => {
-          return import("pages/PrijavaKorisnikaPage.vue");
-        },
-      },
-      {
-        path: "/registracijaKorisnika",
-        component: () => {
-          return import("pages/RegistracijaKorisnikaPage.vue");
-        },
-      },
-      {
-        path: "/postavke",
-        component: () => {
-          return import("pages/PostavkePage.vue");
-        },
-      },
+      {path: "/o_nama", component: () => {return import("pages/ONamaPage.vue");}},
+      {path: "/dogadaji",component: () => {return import("pages/DogadajiPage.vue");}},
+      {path: "/popisVeterinara", component: () => {return import("pages/PopisVeterinaraPage.vue");}},
+      {path: "/prijavaKorisnika",component: () => {return import("pages/PrijavaKorisnikaPage.vue");}},
+      {path: "/registracijaKorisnika",component: () => {return import("pages/RegistracijaKorisnikaPage.vue");}},
+      {path: "/postavke", component: () => {return import("pages/PostavkePage.vue");}},
+    ],
+  },
+  {
+    path: "/admin",
+    component: () => import("layouts/AdminLayout.vue"),
+    children: [
+      { path: "", component: () => import("pages/IndexPage.vue") },
+      {path: "/admin/postavke", component: () => {return import("pages/PostavkePage.vue");}},
     ],
   },
 

@@ -84,10 +84,70 @@ app.get("/api/veterinarians/:id", (req, res) => {
   );
 });
 
+app.post("/api/admin", (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).send("Molimo unesite korisničko ime i lozinku.");
+  }
+
+  // SQL upit za provjeru administratora
+  const query = `
+    SELECT * FROM Administrator
+    WHERE koris_ime_admina IN ('ncikovic', 'kblazevic')
+      AND Koris_ime_admina = ?
+      AND lozinka_admina = ?
+  `;
+
+  connection.query(query, [username, password], (error, results) => {
+    if (error) {
+      console.error("Greška pri provjeri korisnika:", error);
+      return res.status(500).send("Greška na serveru.");
+    }
+
+    if (results.length === 0) {
+      return res.status(401).send("Neispravno korisničko ime ili lozinka.");
+    }
+
+    // Uspješna prijava
+    res.status(200).send(`Dobrodošli, ${username}!`);
+  });
+});
+
 app.get("/api/users", (req, res) => {
   connection.query("SELECT * FROM Korisnik", (err, results) => {
     if (err) throw err;
     res.send(results);
+  });
+});
+
+app.post("/api/user", (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).send("Molimo unesite korisničko ime i lozinku.");
+  }
+
+  // SQL upit za provjeru korisnika
+  const query = `
+    SELECT * FROM Korisnik
+    WHERE nadimak_korisnika IN ('Anchi','Marko','Zoja','Sarchi')
+      AND nadimak_korisnika = ?
+      AND lozinka_korisnika = ?
+  `;
+
+  connection.query(query, [username, password], (error, results) => {
+    if (error) {
+      console.error("Greška pri provjeri korisnika:", error);
+      return res.status(500).send("Greška na serveru.");
+    }
+
+    if (results.length === 0) {
+      return res.status(401).send("Neispravno korisničko ime ili lozinka.");
+    }
+
+    // Uspješna prijava
+    res.status(200).send(`Dobrodošli u Pets&Care!`);
   });
 });
 
@@ -287,15 +347,20 @@ app.post("/api/registracija", (req, res) => {
   }
 
   // Insert the user data into the database
-  const query = 'INSERT INTO users (name, email, username, password) VALUES (?, ?, ?, ?)';
-  connection.query(query, [name, email, username, password], (error, results) => {
-    if (error) {
-      console.error('Greška pri unosu korisnika:', error);
-      return res.status(500).send('Greška pri unosu korisnika.');
-    }
+  const query =
+    "INSERT INTO users (name, email, username, password) VALUES (?, ?, ?, ?)";
+  connection.query(
+    query,
+    [name, email, username, password],
+    (error, results) => {
+      if (error) {
+        console.error("Greška pri unosu korisnika:", error);
+        return res.status(500).send("Greška pri unosu korisnika.");
+      }
 
-    res.status(200).send("Korisnik uspješno registriran.");
-  });
+      res.status(200).send("Korisnik uspješno registriran.");
+    }
+  );
 });
 
 // API rute za prijavu
@@ -309,25 +374,32 @@ app.post("/api/login", (req, res) => {
 
   // Provjera u bazi podataka prema korisničkom imenu ili emailu
   const query = "SELECT * FROM users WHERE username = ? OR email = ?";
-  connection.query(query, [usernameOrEmail, usernameOrEmail], (error, results) => {
-    if (error) {
-      return res.status(500).send("Greška pri provjeri korisničkih podataka.");
-    }
+  connection.query(
+    query,
+    [usernameOrEmail, usernameOrEmail],
+    (error, results) => {
+      if (error) {
+        return res
+          .status(500)
+          .send("Greška pri provjeri korisničkih podataka.");
+      }
 
-    if (results.length === 0) {
-      return res.status(404).send("Korisničko ime ili email nisu pronađeni.");
-    }
+      if (results.length === 0) {
+        return res.status(404).send("Korisničko ime ili email nisu pronađeni.");
+      }
 
-    const user = results[0];
+      const user = results[0];
 
-    // Provjera lozinke
-    if (password === user.password) { // U stvarnom sustavu ovdje bi trebalo koristiti hashing lozinki
-      // Prijava je uspješna
-      res.status(200).send({ message: "Prijava uspješna", user });
-    } else {
-      res.status(401).send("Pogrešna lozinka.");
+      // Provjera lozinke
+      if (password === user.password) {
+        // U stvarnom sustavu ovdje bi trebalo koristiti hashing lozinki
+        // Prijava je uspješna
+        res.status(200).send({ message: "Prijava uspješna", user });
+      } else {
+        res.status(401).send("Pogrešna lozinka.");
+      }
     }
-  });
+  );
 });
 
 /*Pokretanje servera

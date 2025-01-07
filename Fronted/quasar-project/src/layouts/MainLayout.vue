@@ -11,11 +11,9 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title class="text-h3">
-          Pets&Care web aplication
-        </q-toolbar-title>
+        <q-toolbar-title class="text-center-h1 custom-title">Pets&Care</q-toolbar-title>
 
-        <!-- Logo aplikacije s navigacijom na početnu stranicu -->
+        <!-- Logo sa stiliziranim klikom na njega -->
         <img
           class="nav-logo"
           src="../assets/Pets&Care.svg"
@@ -71,11 +69,15 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+    >
       <q-list>
         <q-item-label header> Essential Links </q-item-label>
 
-        <EssentialLink
+        <q-item
           v-for="link in linksList"
           :key="link.title"
           clickable
@@ -92,7 +94,6 @@
       </q-list>
     </q-drawer>
 
-    <!-- STRANICE APLIKACIJE -->
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -107,19 +108,18 @@ defineOptions({
   name: "MainLayout",
 });
 
-// Lista linkova za lijevi izbornik
 const linksList = [
   {
     title: "Početna stranica",
     caption: "Početna",
     icon: "home",
-    link: "#/",
+    link: "",
   },
   {
     title: "O nama",
     caption: "Saznaj o Pets&Care zajednici!",
-    icon: "favourite",
-    link: "#/o_nama",
+    icon: "pets",
+    link: "/o_nama",
   },
   {
     title: "Događaji",
@@ -141,36 +141,45 @@ const linksList = [
   },
   {
     title: "Registracija korisnika",
-    caption: "Nemaš račun? Registriraj se!",
+    caption: "Nemaš račun?  Registriraj se!",
     icon: "app_registration",
     link: "/registracijaKorisnika",
   },
   {
     title: "Postavke",
-    caption: "Postavke",
+    caption: "Postavke aplikacije",
     icon: "settings",
-    link: "#/postavke",
+    link: "/postavke",
   },
 ];
 
 const leftDrawerOpen = ref(false);
+const router = useRouter();
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
+function navigateTo(route) {
+  router.push(route);
+}
 </script>
 
-<style scoped>
-/* Postavljanje prilagodljive veličine teksta za cijelu aplikaciju */
-html {
-  font-size: var(--text-size, 16px);
-}
+<script>
+export default {
+  name: 'ImageNavigation',
+  methods: {
+    returnHome() {
+      this.$router.push('/');
+    }
+  }
+};</script>
 
-/* Stil za logo */
-.nav-logo {
-  width: 80px; /* Povećali smo veličinu loga */
-  cursor: pointer; /* Pokazivač za klik */
-  margin-left: auto; /* Poravnava logo na desnu stranu */
+<style scoped>
+.custom-title {
+  font-weight: bold;
+  font-size: 2.5em;
+  text-transform: uppercase;
+  color: #ffffff;
 }
 </style>

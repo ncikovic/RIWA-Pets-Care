@@ -1,4 +1,5 @@
 const express = require("express");
+const router = express.Router();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
@@ -79,39 +80,87 @@ app.get("/api/veterinarians/:id", (req, res) => {
     [id],
     (error, results) => {
       if (error) throw error;
-      res.send(results[0]); // Pretpostavljamo da vraćamo samo jednog veterinara
+      res.send(results[0]); 
     }
   );
 });
 
-app.post("/api/admin", (req, res) => {
+router.get("/users/count", (req, res) => {
+  const query = "SELECT COUNT(*) AS count FROM Korisnik"; 
+
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error("Greška pri dohvaćanju broja korisnika:", err);
+      return res.status(500).json({ error: "Greška na serveru" });
+    }
+
+    res.json({ count: results[0].count });
+  });
+});
+
+app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).send("Molimo unesite korisničko ime i lozinku.");
+    return res
+      .status(400)
+      .json({ message: "Molimo unesite korisničko ime i lozinku." });
   }
 
-  // SQL upit za provjeru administratora
-  const query = `
+  // Prvo provjeravamo u tablici Administrator
+  const adminQuery = `
     SELECT * FROM Administrator
-    WHERE koris_ime_admina IN ('ncikovic', 'kblazevic')
-      AND Koris_ime_admina = ?
+    WHERE koris_ime_admina = ?
       AND lozinka_admina = ?
   `;
 
-  connection.query(query, [username, password], (error, results) => {
-    if (error) {
-      console.error("Greška pri provjeri korisnika:", error);
-      return res.status(500).send("Greška na serveru.");
-    }
+  connection.query(
+    adminQuery,
+    [username, password],
+    (adminError, adminResults) => {
+      if (adminError) {
+        console.error("Greška pri provjeri administratora:", adminError);
+        return res.status(500).json({ message: "Greška na serveru." });
+      }
 
-    if (results.length === 0) {
-      return res.status(401).send("Neispravno korisničko ime ili lozinka.");
-    }
+      if (adminResults.length > 0) {
+        return res.status(200).json({
+          message: "Uspješna prijava!",
+          user: { username, role: "admin" },
+        });
+      }
 
-    // Uspješna prijava
-    res.status(200).send(`Dobrodošli, ${username}!`);
-  });
+      // Ako nije administrator, provjeravamo u tablici Korisnik
+      const userQuery = `
+      SELECT * FROM Korisnik
+      WHERE nadimak_korisnika = ?
+        AND lozinka_korisnika = ?
+    `;
+
+      connection.query(
+        userQuery,
+        [username, password],
+        (userError, userResults) => {
+          if (userError) {
+            console.error("Greška pri provjeri korisnika:", userError);
+            return res.status(500).json({ message: "Greška na serveru." });
+          }
+
+          if (userResults.length === 0) {
+            return res
+              .status(401)
+              .json({ message: "Neispravno korisničko ime ili lozinka." });
+          }
+
+          // Uspješna prijava korisnika
+          res.status(200).json({
+            message: "Uspješna prijava!",
+            user: { username, role: "user" },
+          });
+        }
+      );
+    }
+  );
 });
 
 app.get("/api/users", (req, res) => {
@@ -121,34 +170,66 @@ app.get("/api/users", (req, res) => {
   });
 });
 
-app.post("/api/user", (req, res) => {
-  const { username, password } = req.body;
-
-  if (!username || !password) {
-    return res.status(400).send("Molimo unesite korisničko ime i lozinku.");
-  }
-
-  // SQL upit za provjeru korisnika
-  const query = `
-    SELECT * FROM Korisnik
-    WHERE nadimak_korisnika IN ('Anchi','Marko','Zoja','Sarchi')
-      AND nadimak_korisnika = ?
-      AND lozinka_korisnika = ?
-  `;
-
-  connection.query(query, [username, password], (error, results) => {
-    if (error) {
-      console.error("Greška pri provjeri korisnika:", error);
-      return res.status(500).send("Greška na serveru.");
+app.post("/api/users", (req, res) => {
+  const {
+    ime_korisnika,
+    prezime_korisnika,
+    broj_telefona_korisnika,
+    email_korisnika,
+    datum_rodenja,
+    mjesto_stanovanja,
+    adresa_korisnika,
+    nadimak_korisnika,
+    lozinka_korisnika,
+  } = req.body;
+  const query =
+    "INSERT INTO Korisnik (ime_korisnika, prezime_korisnika, broj_telefona_korisnika, email_korisnika, datum_rodenja, mjesto_stanovanja, adresa_korisnika, nadimak_korisnika, lozinka_korisnika) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  connection.query(
+    query,
+    [
+      ime_korisnika,
+      prezime_korisnika,
+      broj_telefona_korisnika,
+      email_korisnika,
+      datum_rodenja,
+      mjesto_stanovanja,
+      adresa_korisnika,
+      nadimak_korisnika,
+      lozinka_korisnika,
+    ],
+    (err) => {
+      if (err) throw err;
+      res.send("Korisnik dodan.");
     }
+  );
+});
 
-    if (results.length === 0) {
-      return res.status(401).send("Neispravno korisničko ime ili lozinka.");
+// Uredi korisnika
+app.put("/api/users/:id", (req, res) => {
+  const { SIFRA_KORISNIKA } = req.params;
+  const { ime_korisnika, prezime_korisnika, email_korisnika } = req.body;
+  const query =
+    "UPDATE Korisnik SET ime_korisnika=?, prezime_korisnika=?, email_korisnika=? WHERE SIFRA_KORISNIKA=?";
+  connection.query(
+    query,
+    [ime_korisnika, prezime_korisnika, email_korisnika, SIFRA_KORISNIKA],
+    (err) => {
+      if (err) throw err;
+      res.send("Korisnik ažuriran.");
     }
+  );
+});
 
-    // Uspješna prijava
-    res.status(200).send(`Dobrodošli u Pets&Care!`);
-  });
+// Obriši korisnika
+app.delete("/api/users/:id", (req, res) => {
+  connection.query(
+    "DELETE FROM Korisnik WHERE SIFRA_KORISNIKA=?",
+    [req.params.id],
+    (err) => {
+      if (err) throw err;
+      res.send("Korisnik obrisan.");
+    }
+  );
 });
 
 // 2. GET: Lista ljubimaca po vrsti životinje
@@ -181,35 +262,6 @@ app.get("/api/dogadaji/:mjesto_dogadaja", (req, res) => {
     (err, results) => {
       if (err) throw err;
       res.send(results);
-    }
-  );
-});
-
-// 5. PUT: Ažuriranje podataka o jednom korisniku
-app.put("/api/users/:SIFRA_KORISNIKA", (req, res) => {
-  const SIFRA_KORISNIKA = req.params.SIFRA_KORISNIKA;
-  const {
-    ime_korisnika,
-    prezime_korisnika,
-    broj_telefona_korisnika,
-    email_korisnika,
-    mjesto_stanovanja,
-    adresa_korisnika,
-  } = req.body;
-  connection.query(
-    "UPDATE Korisnik SET ime_korisnika = ?, prezime_korisnika =?, broj_telefona_korisnika=?, email_korisnika = ?, mjesto_stanovanja = ?, adresa_korisnika =? WHERE SIFRA_KORISNIKA = ?",
-    [
-      ime_korisnika,
-      prezime_korisnika,
-      broj_telefona_korisnika,
-      email_korisnika,
-      mjesto_stanovanja,
-      adresa_korisnika,
-      SIFRA_KORISNIKA,
-    ],
-    (err, results) => {
-      if (err) throw err;
-      res.send({ message: "Korisnik uspješno ažuriran!" });
     }
   );
 });
@@ -339,19 +391,19 @@ app.post("/api/zdravstveniKarton", (req, res) => {
 
 // API endpoint for user registration
 app.post("/api/registracija", (req, res) => {
-  const { name, email, username, password } = req.body;
+  const { ime_korisnika, prezime_korisnika, broj_telefona_korisnika, email_korisnika, datum_rodenja, mjesto_stanovanja, adresa_korisnika, nadimak_korisnika, lozinka_korisnika } = req.body;
 
   // Validate the input data
-  if (!name || !email || !username || !password) {
+  if (!ime_korisnika ||!prezime_korisnika || !broj_telefona_korisnika ||!email_korisnika || !datum_rodenja || !mjesto_stanovanja || !adresa_korisnika || !nadimak_korisnika || !lozinka_korisnika) {
     return res.status(400).send("Svi podaci su obavezni.");
   }
 
   // Insert the user data into the database
   const query =
-    "INSERT INTO users (name, email, username, password) VALUES (?, ?, ?, ?)";
+    "INSERT INTO Korisnik (ime_korisnika, prezime_korisnika, broj_telefona_korisnika, email_korisnika, datum_rodenja, mjesto_stanovanja, adresa_korisnika, nadimak_korisnika, lozinka_korisnika) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
   connection.query(
     query,
-    [name, email, username, password],
+    [ime_korisnika, prezime_korisnika, broj_telefona_korisnika, email_korisnika, datum_rodenja, mjesto_stanovanja, adresa_korisnika, nadimak_korisnika, lozinka_korisnika],
     (error, results) => {
       if (error) {
         console.error("Greška pri unosu korisnika:", error);
@@ -363,43 +415,26 @@ app.post("/api/registracija", (req, res) => {
   );
 });
 
-// API rute za prijavu
-app.post("/api/login", (req, res) => {
-  const { usernameOrEmail, password } = req.body;
+app.put("/api/settings/simple", (req, res) => {
+  try {
+    const { maintenanceMode, userRegistration, emailNotifications } = req.body;
 
-  // Provjera da su oba polja unesena
-  if (!usernameOrEmail || !password) {
-    return res.status(400).send("Korisničko ime/email i lozinka su obavezni.");
-  }
-
-  // Provjera u bazi podataka prema korisničkom imenu ili emailu
-  const query = "SELECT * FROM users WHERE username = ? OR email = ?";
-  connection.query(
-    query,
-    [usernameOrEmail, usernameOrEmail],
-    (error, results) => {
-      if (error) {
-        return res
-          .status(500)
-          .send("Greška pri provjeri korisničkih podataka.");
-      }
-
-      if (results.length === 0) {
-        return res.status(404).send("Korisničko ime ili email nisu pronađeni.");
-      }
-
-      const user = results[0];
-
-      // Provjera lozinke
-      if (password === user.password) {
-        // U stvarnom sustavu ovdje bi trebalo koristiti hashing lozinki
-        // Prijava je uspješna
-        res.status(200).send({ message: "Prijava uspješna", user });
-      } else {
-        res.status(401).send("Pogrešna lozinka.");
-      }
+    if (
+      maintenanceMode === undefined ||
+      userRegistration === undefined ||
+      emailNotifications === undefined
+    ) {
+      return res.status(400).json({ message: "Nedostaju potrebni parametri" });
     }
-  );
+
+    settings.maintenanceMode = maintenanceMode;
+    settings.userRegistration = userRegistration;
+    settings.emailNotifications = emailNotifications;
+
+    res.json({ message: "Jednostavne postavke ažurirane", settings });
+  } catch (error) {
+    res.status(500).json({ message: "Greška pri ažuriranju postavki", error });
+  }
 });
 
 /*Pokretanje servera

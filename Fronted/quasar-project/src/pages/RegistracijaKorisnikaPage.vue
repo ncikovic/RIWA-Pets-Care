@@ -2,75 +2,177 @@
   <q-page class="q-pa-md flex justify-center items-center">
     <div class="form-container pozadina_crna">
       <h1 class="text-center bijela">Registracija</h1>
-      <p class="text-center">Registrirajte se kako biste dobili pristup našem sistemu.</p>
+      <p class="text-center">
+        Registrirajte se kako biste dobili pristup našem sistemu.
+      </p>
 
       <!-- Ime -->
       <q-input
-        v-model="form.name"
-        label="Ime"
-        :rules="[val => val && val.length > 0 || 'Ime je obavezno']"
+        v-model="form.ime_korisnika"
+        label="Ime korisnika"
+        :rules="[(val) => (val && val.length > 0) || 'Ime je obavezno']"
+        lazy-rules
+        class="q-mb-md"
+      />
+
+      <!-- Prezime -->
+      <q-input
+        v-model="form.prezime_korisnika"
+        label="Prezime korisnika"
+        :rules="[(val) => (val && val.length > 0) || 'Ime je obavezno']"
+        lazy-rules
+        class="q-mb-md"
+      />
+
+      <q-input
+        v-model="form.broj_telefona_korisnika"
+        label="Broj telefona korisnika"
+        type="tel"
+        :rules="[
+          (val) => (val && val.length > 0) || 'Broj telefona je obavezan',
+          (val) =>
+            /^\d+$/.test(val) || 'Broj telefona mora sadržavati samo brojeve',
+        ]"
         lazy-rules
         class="q-mb-md"
       />
 
       <!-- Email -->
       <q-input
-        v-model="form.email"
-        label="Email"
+        v-model="form.email_korisnika"
+        label="Email korisnika"
         type="email"
         :rules="[
-          val => val && val.length > 0 || 'Email je obavezan',
-          val => /.+@.+\..+/.test(val) || 'Email nije u ispravnom formatu'
+          (val) => (val && val.length > 0) || 'Email je obavezan',
+          (val) => /.+@.+\..+/.test(val) || 'Email nije u ispravnom formatu',
         ]"
+        lazy-rules
+        class="q-mb-md"
+      />
+
+      <!-- Datum rođenja -->
+      <q-input
+        v-model="form.datum_rodenja"
+        label="Datum rođenja korisnika"
+        mask="####-##-##"
+        :rules="[
+          (val) => !!val || 'Datum rođenja je obavezan',
+          (val) =>
+            /^\d{4}-\d{2}-\d{2}$/.test(val) || 'Format mora biti YYYY-MM-DD',
+        ]"
+        lazy-rules
+        class="q-mb-md"
+      />
+
+      <!-- Mjesto stanovanja -->
+      <q-select
+        v-model="form.mjesto_stanovanja"
+        label="Mjesto stanovanja"
+        :options="cities"
+        :rules="[(val) => !!val || 'Mjesto stanovanja je obavezno']"
+        lazy-rules
+        class="q-mb-md"
+      />
+
+      <!-- Adresa stanovanja -->
+      <q-input
+        v-model="form.adresa_korisnika"
+        label="Adresa stanovanja"
+        :rules="[(val) => (val && val.length > 0) || 'Adresa je obavezna']"
         lazy-rules
         class="q-mb-md"
       />
 
       <!-- Korisničko ime -->
       <q-input
-        v-model="form.username"
+        v-model="form.nadimak_korisnika"
         label="Korisničko ime"
-        :rules="[val => val && val.length > 0 || 'Korisničko ime je obavezno']"
+        :rules="[
+          (val) => (val && val.length > 0) || 'Korisničko ime je obavezno',
+        ]"
         lazy-rules
         class="q-mb-md"
       />
 
       <!-- Lozinka -->
       <q-input
-        v-model="form.password"
+        v-model="form.lozinka_korisnika"
         label="Lozinka"
         type="password"
-        :rules="[val => val && val.length >= 6 || 'Lozinka mora imati barem 6 znakova']"
+        :rules="[
+          (val) =>
+            (val && val.length >= 6) || 'Lozinka mora imati barem 6 znakova',
+        ]"
         lazy-rules
         class="q-mb-md"
       />
 
       <!-- Potvrdi -->
-      <q-btn label="Potvrdi" color="primary" @click="registerUser" class="full-width-btn" />
+      <q-btn
+        label="Potvrdi"
+        color="primary"
+        @click="userRegistration"
+        class="full-width-btn"
+      />
     </div>
   </q-page>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   data() {
     return {
       form: {
-        name: "",
-        email: "",
-        username: "",
-        password: "",
+        ime_korisnika: "",
+        prezime_korisnika: "",
+        broj_telefona_korisnika: "",
+        email_korisnika: "",
+        datum_rodenja: "",
+        mjesto_stanovanja: "",
+        adresa_korisnika: "",
+        nadimak_korisnika: "",
+        lozinka_korisnika: "",
       },
+      cities: [
+        "Zagreb",
+        "Split",
+        "Rijeka",
+        "Osijek",
+        "Zadar",
+        "Slavonski Brod",
+        "Pula",
+        "Karlovac",
+        "Varaždin",
+        "Šibenik",
+        "Dubrovnik",
+        "Sisak",
+        "Bjelovar",
+        "Kaštela",
+        "Vinkovci",
+        "Koprivnica",
+        "Đakovo",
+        "Požega",
+        "Zaprešić",
+        "Samobor",
+        "Vukovar",
+        "Čakovec",
+        "Trogir",
+        "Petrinja",
+        "Križevci",
+      ],
     };
   },
   methods: {
-    async registerUser() {
+    async userRegistration() {
       // Provjera valjanosti forme
       if (this.isFormValid()) {
         try {
-          const response = await axios.post("http://localhost:3000/api/registracija", this.form);
+          const response = await axios.post(
+            "http://localhost:3000/api/registracija",
+            this.form
+          );
           console.log("Registracija uspješna:", response.data);
           alert("Registracija je uspješno izvršena!");
         } catch (error) {
@@ -83,7 +185,18 @@ export default {
     },
     isFormValid() {
       // Provjera da li su svi podaci uneseni
-      return this.form.name && this.form.email && this.form.username && this.form.password && this.form.password.length >= 6;
+      return (
+        this.form.ime_korisnika &&
+        this.form.prezime_korisnika &&
+        this.form.broj_telefona_korisnika &&
+        this.form.email_korisnika &&
+        this.form.datum_rodenja &&
+        this.form.mjesto_stanovanja &&
+        this.form.adresa_korisnika &&
+        this.form.nadimak_korisnika &&
+        this.form.lozinka_korisnika &&
+        this.form.lozinka_korisnika.length >= 6
+      );
     },
   },
 };

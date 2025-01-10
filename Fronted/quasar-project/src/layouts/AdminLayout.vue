@@ -67,19 +67,19 @@ const adminLinks = [
     title: "Dashboard",
     caption: "Pregled administracije",
     icon: "dashboard",
-    link: "/admin/dashboard",
+    link: "",
   },
   {
     title: "Korisnici",
     caption: "Upravljanje korisnicima",
     icon: "people",
-    link: "/admin/korisnici",
+    link: "/admin/popisKorisnika",
   },
   {
     title: "Postavke",
     caption: "Administratorske postavke",
     icon: "settings",
-    link: "/admin/postavke",
+    link: "/admin/Postavke",
   },
   {
     title: "Izvješća",

@@ -10,14 +10,17 @@ const routes = [
       {path: "/prijavaKorisnika",component: () => {return import("pages/PrijavaKorisnikaPage.vue");}},
       {path: "/registracijaKorisnika",component: () => {return import("pages/RegistracijaKorisnikaPage.vue");}},
       {path: "/postavke", component: () => {return import("pages/PostavkePage.vue");}},
+      {path: "/mojRacun", component: () => {return import("pages/MojRacunPage.vue");}},
+      {path: "/mojiLjubimci", component: () => {return import("pages/MojiLjubimciPage.vue");}},
     ],
   },
   {
     path: "/admin",
     component: () => import("layouts/AdminLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/IndexPage.vue") },
-      {path: "/admin/postavke", component: () => {return import("pages/PostavkePage.vue");}},
+      { path: "", component: () => import("pages/IndexAdmin.vue") },
+      {path: "/admin/Postavke", component: () => {return import("pages/AdminPostavke.vue");}},
+      {path: "/admin/popisKorisnika", component: () => {return import("pages/PopisKorisnika.vue");}},
     ],
   },
 

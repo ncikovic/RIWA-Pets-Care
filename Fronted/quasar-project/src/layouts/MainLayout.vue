@@ -11,7 +11,9 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title class="text-center-h1 custom-title">Pets&Care</q-toolbar-title>
+        <q-toolbar-title class="text-center-h1 custom-title"
+          >Pets&Care</q-toolbar-title
+        >
 
         <!-- Logo sa stiliziranim klikom na njega -->
         <img
@@ -20,14 +22,57 @@
           @click="returnHome"
           alt="Pets&Care logo"
         />
+
+        <!-- Avatar korisnika s drop-down menijem -->
+        <q-btn
+          flat
+          round
+          dense
+          icon="account_circle"
+          aria-label="Profile"
+          ref="menuButton"
+          @click="menu = !menu"
+        />
+        <q-menu
+          v-model="menu"
+          anchor="bottom right"
+          self="top right"
+          :target="$refs.menuButton"
+        >
+          <q-list>
+            <q-item clickable @click="navigateTo('/mojRacun')">
+              <q-item-section avatar>
+                <q-icon name="person" />
+              </q-item-section>
+              <q-item-section>Moj račun</q-item-section>
+            </q-item>
+            <q-item clickable @click="navigateTo('/mojiLjubimci')">
+              <q-item-section avatar>
+                <q-icon name="pets" />
+              </q-item-section>
+              <q-item-section>Moji ljubimci</q-item-section>
+            </q-item>
+            <q-item clickable @click="navigateTo('/postavke')">
+              <q-item-section avatar>
+                <q-icon name="settings" />
+              </q-item-section>
+              <q-item-section>Postavke</q-item-section>
+            </q-item>
+            <q-item clickable @click="toggleLoginLogout">
+              <q-item-section avatar>
+                <q-icon :name="isLoggedIn ? 'logout' : '/prijavaKorisnika'" />
+              </q-item-section>
+              <q-item-section>
+                <span v-if="isLoggedIn"> {{ username }} (Odjava) </span>
+                <span v-else> Prijava </span>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
         <q-item-label header> Essential Links </q-item-label>
 
@@ -121,15 +166,21 @@ function navigateTo(route) {
 
 <script>
 export default {
-  name: 'ImageNavigation',
+  name: "ImageNavigation",
   methods: {
     returnHome() {
-      this.$router.push('/');
-    }
-  }
-};</script>
+      this.$router.push("/");
+    },
+  },
+};
+</script>
 
 <style scoped>
+.custom-header {
+  background: linear-gradient(135deg, #8be8ff, #7e38e0);
+  color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
 .custom-title {
   font-weight: bold;
   font-size: 2.5em;

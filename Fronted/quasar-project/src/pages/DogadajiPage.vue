@@ -1,15 +1,16 @@
 <template>
   <div>
-    <q-splitter
-      v-model="splitterModel"
+    <q-splitter before-class="jedan" after-class="dogadaji"      
+    v-model="splitterModel"
       style="
-        height: 600px;
+        height: 90vh;
         border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
       "
+      class="responsive"
     >
       <template v-slot:before>
-        <div class="q-pa-md map-container">
+        <div class="q-pa-md map-container ">
           <div class="q-mb-md calendar-container">
             <q-date v-model="date" :events="events" event-color="yellow" />
           </div>
@@ -18,11 +19,12 @@
       </template>
 
       <template v-slot:after>
-        <q-tab-panels
+        <q-tab-panels 
           v-model="date"
           animated
           transition-prev="jump-up"
           transition-next="jump-up"
+          
         >
           <q-tab-panel v-for="event in events" :name="event" :key="event">
             <div class="event-detail pocrnit">
@@ -208,6 +210,7 @@ export default {
 </script>
 
 <style scoped>
+
 #map {
   height: 100%;
   border-radius: 10px;
@@ -256,5 +259,26 @@ export default {
 
 .q-pa-md {
   padding: 16px;
+}
+
+
+@media only screen and (max-width: 1000px) {
+.responsive{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2,auto);
+  min-height:150vh;
+}
+::v-deep(.jedan) {
+  width:100vw !important;
+}
+  
+.map{
+  height:50svh !important;
+}
+
+::v-deep(.dogadaji){
+  grid-row-start: 2 !important;
+}
 }
 </style>

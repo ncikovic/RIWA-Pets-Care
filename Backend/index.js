@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require("express-session"); // Dodano za upravljanje sesijama
 const router = express.Router();
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -9,10 +10,18 @@ const port = 3000;
 
 app.use(cors());
 
+// Konfiguracija sesija
+app.use(
+  session({
+    secret: "tajnaSesija",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }, // Postaviti na true ako se koristi HTTPS
+  })
+);
+
 // Parser za JSON podatke
 app.use(bodyParser.json());
-
-// Parser za podatke iz formi
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const connection = mysql.createConnection({
@@ -24,13 +33,7 @@ const connection = mysql.createConnection({
 
 app.use(express.urlencoded({ extended: true }));
 
-/*
-connection.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
-*/
-
+// Pokretanje servera
 app.listen(port, () => {
   console.log("Server running at port: " + port);
 });
@@ -80,13 +83,13 @@ app.get("/api/veterinarians/:id", (req, res) => {
     [id],
     (error, results) => {
       if (error) throw error;
-      res.send(results[0]); 
+      res.send(results[0]);
     }
   );
 });
 
 router.get("/users/count", (req, res) => {
-  const query = "SELECT COUNT(*) AS count FROM Korisnik"; 
+  const query = "SELECT COUNT(*) AS count FROM Korisnik";
 
   connection.query(query, (err, results) => {
     if (err) {
@@ -98,6 +101,7 @@ router.get("/users/count", (req, res) => {
   });
 });
 
+//---------------LOGIN KORISNIKA I ADMINISTRATORA----------------//
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
 
@@ -151,14 +155,53 @@ app.post("/api/login", (req, res) => {
               .status(401)
               .json({ message: "Neispravno korisničko ime ili lozinka." });
           }
+          req.session.user = {
+            id: results[0].SIFRA_KORISNIKA,
+            username: results[0].nadimak_korisnika,
+          };
 
           // Uspješna prijava korisnika
           res.status(200).json({
             message: "Uspješna prijava!",
+            user: req.session.user,
             user: { username, role: "user" },
           });
         }
       );
+    }
+  );
+});
+
+//-------------------ODJAVA KORISNIKA IZ SUSTAVA------------------//
+app.post("/api/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ message: "Greška pri odjavi." });
+    }
+    res.json({ message: "Odjava uspješna." });
+  });
+});
+
+//-------------------PODACI ZA STR. MOJ RAČUN--------------------//
+app.get("/api/moj-racun", (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ message: "Niste prijavljeni." });
+  }
+
+  connection.query(
+    "SELECT * FROM Korisnik WHERE SIFRA_KORISNIKA = ?",
+    [req.session.user.id],
+    (error, results) => {
+      if (error) {
+        console.error("Greška pri dohvaćanju korisnika:", error);
+        return res.status(500).json({ message: "Greška na serveru." });
+      }
+
+      if (results.length === 0) {
+        return res.status(404).json({ message: "Korisnik nije pronađen." });
+      }
+
+      res.json(results[0]);
     }
   );
 });
@@ -389,12 +432,32 @@ app.post("/api/zdravstveniKarton", (req, res) => {
   );
 });
 
-// API endpoint for user registration
+//----------------REGISTRACIJA KORISNIKA U SUSTAV------------------//
 app.post("/api/registracija", (req, res) => {
-  const { ime_korisnika, prezime_korisnika, broj_telefona_korisnika, email_korisnika, datum_rodenja, mjesto_stanovanja, adresa_korisnika, nadimak_korisnika, lozinka_korisnika } = req.body;
+  const {
+    ime_korisnika,
+    prezime_korisnika,
+    broj_telefona_korisnika,
+    email_korisnika,
+    datum_rodenja,
+    mjesto_stanovanja,
+    adresa_korisnika,
+    nadimak_korisnika,
+    lozinka_korisnika,
+  } = req.body;
 
   // Validate the input data
-  if (!ime_korisnika ||!prezime_korisnika || !broj_telefona_korisnika ||!email_korisnika || !datum_rodenja || !mjesto_stanovanja || !adresa_korisnika || !nadimak_korisnika || !lozinka_korisnika) {
+  if (
+    !ime_korisnika ||
+    !prezime_korisnika ||
+    !broj_telefona_korisnika ||
+    !email_korisnika ||
+    !datum_rodenja ||
+    !mjesto_stanovanja ||
+    !adresa_korisnika ||
+    !nadimak_korisnika ||
+    !lozinka_korisnika
+  ) {
     return res.status(400).send("Svi podaci su obavezni.");
   }
 
@@ -403,7 +466,17 @@ app.post("/api/registracija", (req, res) => {
     "INSERT INTO Korisnik (ime_korisnika, prezime_korisnika, broj_telefona_korisnika, email_korisnika, datum_rodenja, mjesto_stanovanja, adresa_korisnika, nadimak_korisnika, lozinka_korisnika) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
   connection.query(
     query,
-    [ime_korisnika, prezime_korisnika, broj_telefona_korisnika, email_korisnika, datum_rodenja, mjesto_stanovanja, adresa_korisnika, nadimak_korisnika, lozinka_korisnika],
+    [
+      ime_korisnika,
+      prezime_korisnika,
+      broj_telefona_korisnika,
+      email_korisnika,
+      datum_rodenja,
+      mjesto_stanovanja,
+      adresa_korisnika,
+      nadimak_korisnika,
+      lozinka_korisnika,
+    ],
     (error, results) => {
       if (error) {
         console.error("Greška pri unosu korisnika:", error);
@@ -413,28 +486,6 @@ app.post("/api/registracija", (req, res) => {
       res.status(200).send("Korisnik uspješno registriran.");
     }
   );
-});
-
-app.put("/api/settings/simple", (req, res) => {
-  try {
-    const { maintenanceMode, userRegistration, emailNotifications } = req.body;
-
-    if (
-      maintenanceMode === undefined ||
-      userRegistration === undefined ||
-      emailNotifications === undefined
-    ) {
-      return res.status(400).json({ message: "Nedostaju potrebni parametri" });
-    }
-
-    settings.maintenanceMode = maintenanceMode;
-    settings.userRegistration = userRegistration;
-    settings.emailNotifications = emailNotifications;
-
-    res.json({ message: "Jednostavne postavke ažurirane", settings });
-  } catch (error) {
-    res.status(500).json({ message: "Greška pri ažuriranju postavki", error });
-  }
 });
 
 /*Pokretanje servera

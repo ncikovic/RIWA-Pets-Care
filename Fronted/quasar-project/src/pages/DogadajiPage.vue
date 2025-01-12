@@ -1,28 +1,31 @@
 <template>
   <div>
-    <q-splitter
-      v-model="splitterModel"
+    <q-splitter before-class="jedan" after-class="dogadaji"      
+    v-model="splitterModel"
       style="
-        height: 600px;
+        height: 90vh;
         border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
       "
+      class="responsive"
     >
       <template v-slot:before>
-        <div class="q-pa-md map-container">
+        <div class="q-pa-md map-container ">
           <div class="q-mb-md calendar-container">
             <q-date v-model="date" :events="events" event-color="yellow" />
           </div>
-          <div id="map" class="map"></div>
+          
         </div>
+        
       </template>
 
       <template v-slot:after>
-        <q-tab-panels
+        <q-tab-panels 
           v-model="date"
           animated
           transition-prev="jump-up"
           transition-next="jump-up"
+          
         >
           <q-tab-panel v-for="event in events" :name="event" :key="event">
             <div class="event-detail pocrnit">
@@ -42,7 +45,9 @@
         </q-tab-panels>
       </template>
     </q-splitter>
+    <div id="map" class="map"></div>
   </div>
+  
 </template>
 
 <script>
@@ -208,11 +213,23 @@ export default {
 </script>
 
 <style scoped>
+
 #map {
   height: 100%;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.map{
+  width:70vw;
+  height:45vh !important;
+  position: absolute !important;
+  bottom: 0;
+  left:20%;
+  margin-left:5%;
+
+}
+
 
 .map-container {
   display: flex;
@@ -256,5 +273,39 @@ export default {
 
 .q-pa-md {
   padding: 16px;
+}
+
+
+@media only screen and (max-width: 1000px) {
+.responsive{
+  display: grid;
+  grid-template-columns: 1fr;
+  height:80svh !important;
+  margin-bottom: 0 !important;
+  grid-template-rows: 60% 40% !important;
+}
+::v-deep(.jedan) {
+  width:100vw !important;
+}
+
+  
+.map{
+  height:50svh !important;
+  position: relative !important;
+ width:100%;
+ left:0;
+ margin-left:0;
+}
+
+::v-deep(.dogadaji){
+  grid-row-start: 2 !important;
+}
+}
+
+
+@media only screen and (max-height: 800px) {
+  .responsive{
+  height:100svh !important;
+}
 }
 </style>

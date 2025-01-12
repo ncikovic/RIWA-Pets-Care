@@ -8,10 +8,10 @@
       <!-- Korisničko ime ili Email -->
       <q-input
         v-model="username"
-        label="Korisničko ime ili Email"
+        label="Korisničko ime"
         :rules="[
           (val) =>
-            (val && val.length > 0) || 'Korisničko ime ili email je obavezno',
+            (val && val.length > 0) || 'Korisničko ime je obavezno',
         ]"
         lazy-rules
         class="q-mb-md"

@@ -18,7 +18,7 @@ const routes = [
     path: "/admin",
     component: () => import("layouts/AdminLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/IndexAdmin.vue") },
+      { path: "/admin", component: () => import("pages/IndexAdmin.vue") },
       {path: "/admin/Postavke", component: () => {return import("pages/AdminPostavke.vue");}},
       {path: "/admin/popisKorisnika", component: () => {return import("pages/PopisKorisnika.vue");}},
     ],

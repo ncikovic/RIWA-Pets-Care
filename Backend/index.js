@@ -88,15 +88,41 @@ app.get("/api/veterinarians/:id", (req, res) => {
   );
 });
 
-router.get("/users/count", (req, res) => {
-  const query = "SELECT COUNT(*) AS count FROM Korisnik";
-
-  connection.query(query, (err, results) => {
-    if (err) {
-      console.error("Greška pri dohvaćanju broja korisnika:", err);
-      return res.status(500).json({ error: "Greška na serveru" });
+// API za broj korisnika
+app.get("/users/count", (req, res) => {
+  connection.query(
+    "SELECT COUNT(*) AS count FROM Korisnik",
+    (error, results) => {
+      if (error) {
+        console.error("Greška pri dohvaćanju broja korisnika:", error);
+        return res.status(500).send("Greška na serveru");
+      }
+      res.json({ count: results[0].count });
     }
+  );
+});
 
+// API za broj aktivnih prijava
+app.get("/api/sessions/count", (req, res) => {
+  connection.query(
+    "SELECT COUNT(*) AS count FROM sessions WHERE is_active = 1",
+    (error, results) => {
+      if (error) {
+        console.error("Greška pri dohvaćanju broja aktivnih prijava:", error);
+        return res.status(500).send("Greška na serveru");
+      }
+      res.json({ count: results[0].count });
+    }
+  );
+});
+
+// API za broj objava
+app.get("/api/posts/count", (req, res) => {
+  connection.query("SELECT COUNT(*) AS count FROM posts", (error, results) => {
+    if (error) {
+      console.error("Greška pri dohvaćanju broja objava:", error);
+      return res.status(500).send("Greška na serveru");
+    }
     res.json({ count: results[0].count });
   });
 });
@@ -155,15 +181,10 @@ app.post("/api/login", (req, res) => {
               .status(401)
               .json({ message: "Neispravno korisničko ime ili lozinka." });
           }
-          req.session.user = {
-            id: results[0].SIFRA_KORISNIKA,
-            username: results[0].nadimak_korisnika,
-          };
 
           // Uspješna prijava korisnika
           res.status(200).json({
             message: "Uspješna prijava!",
-            user: req.session.user,
             user: { username, role: "user" },
           });
         }

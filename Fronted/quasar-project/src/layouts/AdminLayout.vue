@@ -67,7 +67,7 @@ const adminLinks = [
     title: "Dashboard",
     caption: "Pregled administracije",
     icon: "dashboard",
-    link: "",
+    link: "/admin",
   },
   {
     title: "Korisnici",
@@ -80,12 +80,6 @@ const adminLinks = [
     caption: "Administratorske postavke",
     icon: "settings",
     link: "/admin/Postavke",
-  },
-  {
-    title: "Izvješća",
-    caption: "Pogledaj izvješća",
-    icon: "bar_chart",
-    link: "/admin/izvjesca",
   },
 ];
 

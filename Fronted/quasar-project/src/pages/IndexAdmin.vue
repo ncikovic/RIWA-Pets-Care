@@ -68,6 +68,16 @@ export default {
       this.postCount = postResponse.data.count;
     } catch (error) {
       console.error("Greška pri dohvaćanju podataka:", error);
+      if (error.response) {
+        // Server je odgovorio, ali je došlo do greške u odgovoru
+        console.error("Greška u odgovoru:", error.response.data);
+      } else if (error.request) {
+        // Nema odgovora od servera
+        console.error("Nema odgovora od servera:", error.request);
+      } else {
+        // Drugi problemi s zahtjevom
+        console.error("Greška u konfiguraciji zahtjeva:", error.message);
+      }
     }
   },
 };
@@ -80,7 +90,6 @@ export default {
   color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
-  color: white;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 30px;

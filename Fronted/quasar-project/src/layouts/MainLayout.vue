@@ -6,7 +6,7 @@
           flat
           dense
           round
-          icon="menu"
+          icon="menu" 
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />

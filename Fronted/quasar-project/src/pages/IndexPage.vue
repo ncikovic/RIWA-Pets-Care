@@ -178,8 +178,9 @@ const brands = [
 
 /* FOOTER STILOVI */
 .footer {
-  background-color: #222;
+  background: linear-gradient(135deg, #7e38e0, #8be8ff);
   color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   padding: 10px 20px;
   text-align: center;
   width: 100%;

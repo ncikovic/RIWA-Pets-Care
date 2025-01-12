@@ -14,8 +14,9 @@
           <div class="q-mb-md calendar-container">
             <q-date v-model="date" :events="events" event-color="yellow" />
           </div>
-          <div id="map" class="map"></div>
+          
         </div>
+        
       </template>
 
       <template v-slot:after>
@@ -44,7 +45,9 @@
         </q-tab-panels>
       </template>
     </q-splitter>
+    <div id="map" class="map"></div>
   </div>
+  
 </template>
 
 <script>
@@ -217,6 +220,17 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.map{
+  width:70vw;
+  height:45vh !important;
+  position: absolute !important;
+  bottom: 0;
+  left:20%;
+  margin-left:5%;
+
+}
+
+
 .map-container {
   display: flex;
   flex-direction: column;
@@ -266,19 +280,32 @@ export default {
 .responsive{
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(2,auto);
-  min-height:150vh;
+  height:80svh !important;
+  margin-bottom: 0 !important;
+  grid-template-rows: 60% 40% !important;
 }
 ::v-deep(.jedan) {
   width:100vw !important;
 }
+
   
 .map{
   height:50svh !important;
+  position: relative !important;
+ width:100%;
+ left:0;
+ margin-left:0;
 }
 
 ::v-deep(.dogadaji){
   grid-row-start: 2 !important;
+}
+}
+
+
+@media only screen and (max-height: 800px) {
+  .responsive{
+  height:100svh !important;
 }
 }
 </style>

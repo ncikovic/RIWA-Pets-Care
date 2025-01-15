@@ -1,9 +1,9 @@
 <!-- eslint-disable vue/no-parsing-error -->
 <template>
   <q-page class="q-pa-md flex justify-center items-center">
-    <div class="form-container">
-      <h1 class="text-center">Prijava</h1>
-      <p class="text-center">Unesite svoje korisničke podatke za prijavu.</p>
+    <div class="form-container pozadina_crna">
+      <h1 class="text-center bijela">Prijava</h1>
+      <p class="text-center siva">Unesite svoje korisničke podatke za prijavu.</p>
 
       <!-- Korisničko ime ili Email -->
       <q-input

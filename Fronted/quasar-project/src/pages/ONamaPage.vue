@@ -56,6 +56,7 @@ export default {
   text-align: left;
   color: #000000;
   padding: 30px;
+  margin: 0 auto;
 }
 
 .title {
@@ -64,7 +65,7 @@ export default {
   font-display:inherit;
   font-family: 'Times New Roman', Times, serif;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 50px;
   color: #422c50;
 }
 

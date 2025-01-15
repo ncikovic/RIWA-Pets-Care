@@ -16,18 +16,7 @@
         />
 
         <!-- Postavka za veličinu teksta -->
-        <q-select
-          v-model="textSize"
-          :options="textSizeOptions"
-          dense
-          emit-value
-          map-options
-          options-dense
-          @update:model-value="changeTextSize"
-          :label="$t('textSize')"
-          color="primary"
-          class="q-mb-md"
-        />
+        
       </q-card-section>
     </q-card>
   </q-page>

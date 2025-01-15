@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page class="flex flex-center limit">
     <div class="container">
       <!-- Zadržavamo postojeći logo -->
       <img
@@ -104,11 +104,15 @@ const brands = [
 </script>
 
 <style scoped>
+
 .container {
   text-align: center;
   padding: 10px;
   width: 100%;
   max-width: 1100px;
+  height:auto;
+  align-self: baseline;
+
 }
 
 .logo {
@@ -181,17 +185,23 @@ const brands = [
   background: linear-gradient(135deg, #7e38e0, #8be8ff);
   color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  padding: 10px 20px;
-  text-align: center;
-  width: 100%;
+  width: 85%;
   position: fixed;
   bottom: 0;
+  display: grid;
+  grid-template-columns: 10% 1fr 10%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer-content {
+  width: 50%;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
+  grid-column-start: 2;
 }
 
 .footer-text {
@@ -205,6 +215,7 @@ const brands = [
   gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
+  width:max-content
 }
 
 .brand-logo {
@@ -221,6 +232,10 @@ const brands = [
 @media (max-width: 600px) {
   .page-title {
     font-size: 2rem;
+  }
+
+  .footer{
+    display: none;
   }
 
   .page-description {

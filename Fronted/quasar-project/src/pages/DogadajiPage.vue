@@ -29,7 +29,7 @@
 
         >
           <q-tab-panel v-for="event in events" :name="event" :key="event">
-            <div class="event-detail pocrnit">
+            <div class="event-detail pocrnit pozadina_siva">
               <div class="text-h4 q-mb-md">{{ event }}</div>
               <p>
                 <strong>NAZIV DOGAĐAJA:</strong> {{ eventDetails[event].name }}
@@ -268,8 +268,8 @@ export default {
   color: #374151;
   font-family: 'Times New Roman', Times, serif;
 }
-.p{
-  font-size: medium;
+p{
+  font-size: 1.2rem;
   font-family: 'Times New Roman', Times, serif;
 }
 
@@ -292,6 +292,10 @@ export default {
 }
 ::v-deep(.jedan) {
   width:100vw !important;
+}
+
+p{
+  font-size:1rem;
 }
 
 

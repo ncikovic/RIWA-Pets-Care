@@ -34,16 +34,21 @@
 
 }
 
+.pozadina_siva{
+  background:var( --siva) !important;
+}
+
 .obojaj_logo{
   filter:var(--filter);
 }
 
 .dugme{
-  padding:1rem 2rem;
+  padding:1rem 1rem;
   border-radius: 10vw;
-  width:70%;
+  width:50%;
   margin:0 auto;
   font-size: 1rem;
   margin-top: 5px;
+  transition: all 150ms ease-in-out !important;
 }
 

@@ -22,13 +22,6 @@
             <p>Trenutno prijavljenih: {{ activeSessions }}</p>
           </q-card-section>
         </q-card>
-
-        <q-card class="admin-card">
-          <q-card-section>
-            <div class="text-h6">Broj objava</div>
-            <p>Ukupno objava: {{ postCount }}</p>
-          </q-card-section>
-        </q-card>
       </div>
 
       <!-- Desni blok s dodatnim tekstom -->
@@ -63,9 +56,6 @@ export default {
 
       const sessionResponse = await axios.get("http://localhost:3000/api/sessions/count");
       this.activeSessions = sessionResponse.data.count;
-
-      const postResponse = await axios.get("http://localhost:3000/api/posts/count");
-      this.postCount = postResponse.data.count;
     } catch (error) {
       console.error("Greška pri dohvaćanju podataka:", error);
       if (error.response) {

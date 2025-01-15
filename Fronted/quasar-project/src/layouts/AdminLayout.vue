@@ -76,6 +76,12 @@ const adminLinks = [
     link: "/admin/popisKorisnika",
   },
   {
+    title: "Veterinari",
+    caption: "Upravljanje veterinarima",
+    icon: "people",
+    link: "/admin/popisVeterinara",
+  },
+  {
     title: "Postavke",
     caption: "Administratorske postavke",
     icon: "settings",
@@ -105,7 +111,7 @@ function navigateTo(route) {
 
 /* Zaglavlje */
 .custom-header {
-  background: linear-gradient(135deg, #4a90e2, #0052cc);
+  background: linear-gradient(135deg, #4ac6e2, #5f00cc);
   color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }

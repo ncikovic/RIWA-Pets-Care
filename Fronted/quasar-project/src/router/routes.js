@@ -21,6 +21,7 @@ const routes = [
       { path: "/admin", component: () => import("pages/IndexAdmin.vue") },
       {path: "/admin/Postavke", component: () => {return import("pages/AdminPostavke.vue");}},
       {path: "/admin/popisKorisnika", component: () => {return import("pages/PopisKorisnika.vue");}},
+      {path: "/admin/popisVeterinara", component: () => {return import("pages/PopisVeterinara.vue");}},
     ],
   },
 

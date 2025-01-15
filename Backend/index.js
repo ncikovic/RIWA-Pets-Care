@@ -53,39 +53,113 @@ app.get("/api/pets", (req, res) => {
   res.send("popis_ljubimaca");
 });
 
-// Dohvaćanje jednog ljubimca prema ID-u
-app.get("/api/pets/:id", (req, res) => {
-  const SIFRA_LJUBIMCA = req.params.SIFRA_LJUBIMCA;
+app.get("/moji-ljubimci", (req, res) => {
+  if (!req.session.korisnik) {
+    return res.status(401).json({ error: "Niste prijavljeni" });
+  }
+  
+  const SIFRA_KORISNIKA = req.session.korisnik.SIFRA_KORISNIKA;
   connection.query(
-    "SELECT * FROM Ljubimac WHERE SIFRA_LJUBIMCA = ?",
-    [SIFRA_LJUBIMCA],
-    (error, results) => {
-      if (error) throw error;
-      res.send(results); // Pretpostavljamo da vraćamo samo jednog ljubimca
+    "SELECT * FROM LJUBIMCI WHERE SIFRA_KORISNIKA = ?",
+    [SIFRA_KORISNIKA],
+    (err, results) => {
+      if (err) {
+        return res.status(500).json({ error: "Greška pri dohvaćanju podataka" });
+      }
+      res.json(results);
     }
   );
 });
 
-// Dohvaćanje svih veterinara
-app.get("/api/veterinari", (req, res) => {
-  connection.query("SELECT * FROM Veterinar", (error, results) => {
-    if (error) throw error;
-    res.send(results);
+app.get("/api/veterinar", (req, res) => {
+  const sql = "SELECT * FROM Veterinar";
+  connection.query(sql, (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(results);
   });
-  //res.send("popis_veterinara");
 });
 
-// Dohvaćanje jednog veterinara prema ID-u
-app.get("/api/veterinarians/:id", (req, res) => {
-  const id = req.params.id;
-  connection.query(
-    "SELECT * FROM Veterinar WHERE SIFRA_VETERINARA = ?",
-    [id],
-    (error, results) => {
-      if (error) throw error;
-      res.send(results[0]);
+//Dohvati jednog veterinara po ID-u
+app.get("/api/veterinar/:id", (req, res) => {
+  const sql = "SELECT * FROM Veterinar WHERE id = ?";
+  db.query(sql, [req.params.id], (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (results.length === 0)
+      return res.status(404).json({ message: "Veterinar nije pronađen" });
+    res.json(results[0]);
+  });
+});
+
+//Dodaj novog veterinara
+app.post("/api/veterinar", (req, res) => {
+  const {
+    ime_veterinara,
+    prezime_veterinara,
+    kontakt_veterinara,
+    lokacija_veterinara,
+    email_veterinara,
+    specijalizacija_veterinara,
+  } = req.body;
+  if (
+    !ime_veterinara ||
+    !prezime_veterinara ||
+    !kontakt_veterinara ||
+    lokacija_veterinara ||
+    !email_veterinara ||
+    !specijalizacija_veterinara
+  )
+    return res.status(400).json({ message: "Sva polja su obavezna" });
+
+  const sql =
+    "INSERT INTO veterinarians (ime_veterinara, prezime_veterinara, kontakt_veterinara, lokacija_veterinara, email_veterinara, specijalizacija_veterinara) VALUES (?, ?)";
+  db.query(
+    sql,
+    [
+      ime_veterinara,
+      prezime_veterinara,
+      kontakt_veterinara,
+      lokacija_veterinara,
+      email_veterinara,
+      specijalizacija_veterinara,
+    ],
+    (err, result) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res
+        .status(201)
+        .json({
+          id: result.insertId,
+          ime_veterinara,
+          prezime_veterinara,
+          kontakt_veterinara,
+          lokacija_veterinara,
+          email_veterinara,
+          specijalizacija_veterinara,
+        });
     }
   );
+});
+
+//Ažuriraj podatke o veterinaru
+app.put("/api/veterinarians/:id", (req, res) => {
+  const { name, specialization } = req.body;
+  if (!name || !specialization)
+    return res.status(400).json({ message: "Sva polja su obavezna" });
+
+  const sql =
+    "UPDATE veterinarians SET name = ?, specialization = ? WHERE id = ?";
+  db.query(sql, [name, specialization, req.params.id], (err) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: "Veterinar ažuriran" });
+  });
+});
+
+//Obriši veterinara
+app.delete("/api/veterinarians/:id", (req, res) => {
+  const sql = "DELETE FROM veterinarians WHERE id = ?";
+  db.query(sql, [req.params.id], (err) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ message: "Veterinar obrisan" });
+  });
 });
 
 // API za broj korisnika

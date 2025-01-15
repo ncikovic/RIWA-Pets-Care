@@ -7,20 +7,20 @@
 
       <!-- Sekcija sa slikom i uvodom -->
       <section class="section with-image">
-        <div class="text-content">
-          <h3 class="section-title bijela">Uvod</h3>
-          <p class="siva" v-html="aboutInfo.intro"></p>
-        </div>
         <img
           src="~assets/doberman-photo.jpg"
           alt="Pets and Care"
           class="section-image"
         />
+        <div class="text-content">
+          <h3 class="section-title bijela">Uvod</h3>
+          <p class="siva" v-html="aboutInfo.intro"></p>
+        </div>
       </section>
 
       <section class="section">
         <h3 class="section-title bijela">Misija</h3>
-        <p class="siva">{{ aboutInfo.mission }}</p>
+        <p class="siva" v-html="aboutInfo.mission"></p>
       </section>
 
       <section class="section">
@@ -40,8 +40,8 @@ export default {
         intro:
           "Dobrodošli u Pets&Care!<br>Mi smo web aplikacija koja pomaže vlasnicima kućnih ljubimaca da lakše brinu o svojim voljenim prijateljima.",
         mission:
-          "Naša misija je olakšati svakodnevni život vlasnicima kućnih ljubimaca pružajući im alate za praćenje zdravlja, prehrane i aktivnosti svojih ljubimaca.",
-        goal: "Glavni ciljevi Pets&Care aplikacije su pružiti korisnicima jednostavan i intuitivan način praćenja zdravstvenog stanja svojih ljubimaca, upravljanja njihovom prehranom, te praćenja važnih događaja poput posjeta veterinaru ili redovitih cijepljenja.<br>Osim toga, aplikacija ima za cilj educirati vlasnike o optimalnoj brizi za njihove kućne ljubimce, nudeći relevantne savjete i informacije.<br><br>Kroz implementaciju ovih ciljeva, Pets&Care aplikacija teži postati nepogrešiv partner svakom vlasniku kućnog ljubimca u održavanju zdravlja i sreće njihovih ljubimaca.",
+          "Briga o kućnim ljubimcima zahtijeva odgovornost, organizaciju i pristup relevantnim informacijama, što može biti otežano ubrzanim načinom života.<br><br>Naša misija je olakšati svakodnevni život vlasnicima kućnih ljubimaca pružajući im alate za praćenje zdravlja, prehrane i aktivnosti svojih ljubimaca.",
+        goal: "Glavni ciljevi Pets&Care aplikacije su pružiti korisnicima jednostavan i intuitivan način praćenja zdravstvenog stanja svojih ljubimaca, upravljanja njihovom prehranom, te praćenja važnih događaja poput posjeta veterinaru ili redovitih cijepljenja.<br>Osim toga, aplikacija ima za cilj educirati vlasnike o optimalnoj brizi za njihove kućne ljubimce, nudeći relevantne savjete i informacije.<br><br>Kroz implementaciju ovih ciljeva, Pets&Care aplikacija teži postati nepogrešiv partner svakom vlasniku kućnog ljubimca u održavanju zdravlja i sreće njihovih ljubimaca.<br><br>S razvojem ove aplikacije, cilj je stvoriti sveobuhvatnu platformu koja će unaprijediti interakciju između vlasnika kućnih ljubimaca i stručnjaka, pružajući im jednostavan i učinkovit alat za organizaciju i poboljšanje skrbi o životinjama. Pets&Care predstavlja korak naprijed u digitalizaciji brige o kućnim ljubimcima, čime doprinosi njihovom zdravlju i sreći.",
       },
     };
   },
@@ -52,10 +52,10 @@ export default {
 /* Osnovni stilovi */
 .content {
   max-width: 900px;
-  margin: 0 auto;
+  margin: 10px;
   text-align: left;
-  color: #333;
-  padding: 20px;
+  color: #000000;
+  padding: 30px;
 }
 
 .title {
@@ -67,17 +67,17 @@ export default {
 
 .section {
   margin-bottom: 2em;
-  display: flex;
+  display:inline;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   flex-wrap: wrap;
-  padding: 10px 0;
+  padding: 10px;
 }
 
 .with-image {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   justify-content: space-between;
 }
 
@@ -101,13 +101,13 @@ export default {
   font-size: 1.4rem;
   font-weight: bold;
   margin-bottom: 0.5em;
-  color: #374151;
+  color: #000000;
 }
 
 p {
   font-size: 1.1rem;
   line-height: 1.7;
-  color: #4b5563;
+  color: #000000;
 }
 
 /* Media Queries za mobilne uređaje */

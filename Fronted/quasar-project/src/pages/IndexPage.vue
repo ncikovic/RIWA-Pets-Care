@@ -106,16 +106,16 @@ const brands = [
 <style scoped>
 .container {
   text-align: center;
-  padding: 20px;
+  padding: 10px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1100px;
 }
 
 .logo {
   width: 80%;
-  max-width: 400px;
+  max-width: 320px;
   height: auto;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 /* Animacija za logo */

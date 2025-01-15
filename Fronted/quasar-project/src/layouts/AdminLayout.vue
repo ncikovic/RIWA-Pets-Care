@@ -103,6 +103,7 @@ function navigateTo(route) {
 .custom-title {
   font-weight: bold;
   font-size: 2.5em;
+  font-family: 'Times New Roman', Times, serif;
   text-transform: uppercase;
   color: #ffffff;
   letter-spacing: 2px;
@@ -113,12 +114,14 @@ function navigateTo(route) {
 .custom-header {
   background: linear-gradient(135deg, #4ac6e2, #5f00cc);
   color: white;
+  font-family: 'Times New Roman', Times, serif;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Gumb za otvaranje izbornika */
 .q-btn {
   color: #ffffff;
+  font-family: 'Times New Roman', Times, serif;
   background: rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease-in-out;
 }
@@ -135,6 +138,7 @@ function navigateTo(route) {
 
 .q-list {
   padding: 10px;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 /* Stavke u meniju */

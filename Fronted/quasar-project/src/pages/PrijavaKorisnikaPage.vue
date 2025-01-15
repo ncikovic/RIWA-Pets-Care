@@ -118,6 +118,7 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 500px;
+  font-style: italic;
 }
 
 /* Naslov */
@@ -131,7 +132,7 @@ h1 {
 /* Podnaslov */
 p {
   font-size: 1.2rem;
-  color: #7f8c8d;
+  color: #4c4c4c;
   margin-bottom: 30px;
 }
 
@@ -145,7 +146,7 @@ p {
 
 /* Poboljšanje za hover efekt na gumbu */
 .q-btn:hover {
-  background-color: #6619d2;
+  background-color: #481294;
   transform: scale(1.05);
   transition: transform 0.3s ease, background-color 0.3s ease;
 }

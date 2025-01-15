@@ -52,14 +52,17 @@ export default {
 /* Osnovni stilovi */
 .content {
   max-width: 900px;
-  margin: 10px;
+  margin: 15px;
   text-align: left;
   color: #000000;
   padding: 30px;
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
+  text-align: center;
+  font-display:inherit;
+  font-family: 'Times New Roman', Times, serif;
   font-weight: bold;
   margin-bottom: 15px;
   color: #422c50;
@@ -95,17 +98,25 @@ export default {
   width: 50%; /* Tekst zauzima polovicu širine ekrana */
   padding-left: 20px;
   text-align: justify;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .section-title {
   font-size: 1.4rem;
+  font-family: 'Times New Roman', Times, serif;
   font-weight: bold;
   margin-bottom: 0.5em;
   color: #000000;
 }
+h1 {
+  font-size: large;
+  font-family: 'Times New Roman', Times, serif;
+
+}
 
 p {
   font-size: 1.1rem;
+  font-family: 'Times New Roman', Times, serif;
   line-height: 1.7;
   color: #000000;
 }

@@ -80,6 +80,7 @@ export default {
   color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
+  font-family: 'Times New Roman', Times, serif;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 30px;
@@ -87,12 +88,15 @@ export default {
 
 .admin-header h1 {
   font-size: 2rem;
+  font-family: 'Times New Roman', Times, serif;
   margin-bottom: 5px;
 }
 
 .admin-header p {
   font-size: 1.2rem;
+  font-family: 'Times New Roman', Times, serif;
   opacity: 0.8;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 /* Glavni layout */
@@ -101,6 +105,7 @@ export default {
   justify-content: space-between;
   align-items: flex-start;
   gap: 30px;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 /* Lijeva sekcija s karticama */
@@ -110,6 +115,7 @@ export default {
   gap: 20px;
   flex: 1;
   max-width: 400px;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 /* Stil kartica */
@@ -119,6 +125,7 @@ export default {
   color: white;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: 'Times New Roman', Times, serif;
 }
 
 /* Desna sekcija s informacijama */
@@ -137,11 +144,13 @@ export default {
 .info-card h3 {
   color: #4A148C;
   margin-bottom: 10px;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .info-card p {
   color: #333;
   font-size: 1rem;
   margin-bottom: 10px;
+  font-family: 'Times New Roman', Times, serif;
 }
 </style>

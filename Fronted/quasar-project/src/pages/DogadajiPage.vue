@@ -1,11 +1,12 @@
 <template>
   <div>
-    <q-splitter before-class="jedan" after-class="dogadaji"      
+    <q-splitter before-class="jedan" after-class="dogadaji"
     v-model="splitterModel"
       style="
         height: 90vh;
+        font-family: 'Times New Roman', Times, serif;
         border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       "
       class="responsive"
     >
@@ -14,18 +15,18 @@
           <div class="q-mb-md calendar-container">
             <q-date v-model="date" :events="events" event-color="yellow" />
           </div>
-          
+
         </div>
-        
+
       </template>
 
       <template v-slot:after>
-        <q-tab-panels 
+        <q-tab-panels
           v-model="date"
           animated
           transition-prev="jump-up"
           transition-next="jump-up"
-          
+
         >
           <q-tab-panel v-for="event in events" :name="event" :key="event">
             <div class="event-detail pocrnit">
@@ -47,7 +48,7 @@
     </q-splitter>
     <div id="map" class="map"></div>
   </div>
-  
+
 </template>
 
 <script>
@@ -265,6 +266,11 @@ export default {
 
 .text-h4 {
   color: #374151;
+  font-family: 'Times New Roman', Times, serif;
+}
+.p{
+  font-size: medium;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .q-mb-md {
@@ -288,7 +294,7 @@ export default {
   width:100vw !important;
 }
 
-  
+
 .map{
   height:50svh !important;
   position: relative !important;

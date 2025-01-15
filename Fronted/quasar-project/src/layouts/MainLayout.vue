@@ -179,11 +179,50 @@ export default {
   background: linear-gradient(135deg, #8be8ff, #7e38e0);
   color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: 'Times New Roman', Times, serif;
 }
 .custom-title {
   font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
   font-size: 2.5em;
   text-transform: uppercase;
   color: #ffffff;
+}
+.q-btn {
+  color: #ffffff;
+  font-family: 'Times New Roman', Times, serif;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.q-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Navigacijski drawer */
+.q-drawer {
+  background: #1e1e2f;
+  color: #ffffff;
+}
+
+.q-list {
+  padding: 10px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+/* Stavke u meniju */
+.q-item {
+  transition: all 0.3s ease-in-out;
+  border-radius: 5px;
+}
+
+.q-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
+}
+
+/* Ikone u navigaciji */
+.q-item-section avatar {
+  color: #f5f5f5;
 }
 </style>

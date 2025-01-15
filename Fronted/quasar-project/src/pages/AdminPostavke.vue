@@ -64,6 +64,7 @@ const changeTextSize = (value) => {
 .custom-title {
   color: #422c50; /* Purple boja */
   font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
   font-size: 2rem; /* Veličina fonta */
   text-align: center; /* Centriranje naslova */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Efekt sjenčanja */
